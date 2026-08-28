@@ -9,7 +9,7 @@
 // Page structure mirrors the design reference's service template
 // (reference/screenshots/service-dental-implants.png):
 //   hero → why/benefits + photo → candidacy → options grid → process +
-//   costs → aftercare + photo → FAQs → related services → CTA
+//   costs → aftercare + photo → FAQs → CTA
 //
 // Branding: "Clear Aligner Therapy" is the on-page name for /service/invisalign
 // (client decision — slug kept for SEO continuity).
@@ -49,8 +49,6 @@ export interface Service {
   imageAlt: string;
   secondaryImage?: string;
   secondaryImageAlt?: string;
-  /** Slugs of related services shown at the foot of the page. */
-  related: string[];
 }
 
 const IMG = '/images/proudtosmile';
@@ -120,7 +118,6 @@ export const services: Service[] = [
     imageAlt: 'Dental hygiene tools laid out at Proud To Smile Dentistry',
     secondaryImage: `${IMG}/patient-getting-treated.webp`,
     secondaryImageAlt: 'Patient being treated by a provider at Proud To Smile Dentistry',
-    related: ['periodontal-therapy', 'pediatric-dentistry', 'teeth-whitening'],
   },
 
   {
@@ -213,7 +210,6 @@ export const services: Service[] = [
     ],
     image: `${IMG}/woman-smiling-at-dentist.webp`,
     imageAlt: 'Patient smiling after veneer treatment at Proud To Smile Dentistry',
-    related: ['teeth-whitening', 'crowns', 'cosmetic-and-restorative-dentistry'],
   },
 
   {
@@ -293,7 +289,6 @@ export const services: Service[] = [
     ],
     image: `${IMG}/woman-smiling-at-dentist.webp`,
     imageAlt: 'Patient with a bright smile after teeth whitening at Proud To Smile Dentistry',
-    related: ['veneers', 'cosmetic-and-restorative-dentistry', 'cleaning'],
   },
 
   {
@@ -357,7 +352,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/patient-getting-treated.webp`,
     imageAlt: 'Emergency dental treatment at Proud To Smile Dentistry in Bernardsville, NJ',
-    related: ['extractions-oral-surgery', 'crowns', 'periodontal-therapy'],
   },
 
   {
@@ -417,7 +411,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/dental-services.webp`,
     imageAlt: 'Treatment room where crowns are placed at Proud To Smile Dentistry',
-    related: ['dental-implants', 'veneers', 'extractions-oral-surgery'],
   },
 
   {
@@ -498,7 +491,6 @@ export const services: Service[] = [
     ],
     image: `${IMG}/woman-smiling-at-dentist.webp`,
     imageAlt: 'Patient with a straightened smile after clear aligner therapy',
-    related: ['cosmetic-and-restorative-dentistry', 'sleep-apnea', 'pediatric-dentistry'],
   },
 
   {
@@ -570,7 +562,6 @@ export const services: Service[] = [
     imageAlt: 'Treatment room where dental implants are placed at Proud To Smile Dentistry',
     secondaryImage: `${IMG}/patient-getting-treated.webp`,
     secondaryImageAlt: 'Patient receiving implant treatment at Proud To Smile Dentistry',
-    related: ['crowns', 'dentures', 'extractions-oral-surgery'],
   },
 
   {
@@ -603,7 +594,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/smiling-patient-with-provider.webp`,
     imageAlt: 'Dr. Patricia Swaintek-Lamb consulting with a patient at Proud To Smile Dentistry',
-    related: ['sleep-apnea', 'cosmetic-and-restorative-dentistry', 'crowns'],
   },
 
   {
@@ -645,7 +635,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/dental-services.webp`,
     imageAlt: 'Treatment room at Proud To Smile Dentistry in Bernardsville, NJ',
-    related: ['dental-implants', 'extractions-oral-surgery', 'crowns'],
   },
 
   {
@@ -709,7 +698,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/dental-tools.webp`,
     imageAlt: 'Instruments used for periodontal therapy at Proud To Smile Dentistry',
-    related: ['cleaning', 'extractions-oral-surgery', 'emergency-dentistry'],
   },
 
   {
@@ -744,7 +732,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/woman-smiling-at-dentist.webp`,
     imageAlt: 'Patient smiling after cosmetic dental treatment at Proud To Smile Dentistry',
-    related: ['veneers', 'teeth-whitening', 'crowns'],
   },
 
   {
@@ -804,7 +791,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/dental-services.webp`,
     imageAlt: 'Surgical treatment room at Proud To Smile Dentistry in Bernardsville, NJ',
-    related: ['dental-implants', 'emergency-dentistry', 'periodontal-therapy'],
   },
 
   {
@@ -868,7 +854,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/smiling-patient-with-provider.webp`,
     imageAlt: 'A young patient with a provider at Proud To Smile Dentistry',
-    related: ['cleaning', 'invisalign', 'emergency-dentistry'],
   },
 
   {
@@ -917,7 +902,6 @@ export const services: Service[] = [
     },
     image: `${IMG}/smiling-patient-with-provider.webp`,
     imageAlt: 'Dr. Patti Swaintek-Lamb discussing sleep apnea treatment with a patient',
-    related: ['invisalign', 'botox', 'cleaning'],
   },
 ];
 

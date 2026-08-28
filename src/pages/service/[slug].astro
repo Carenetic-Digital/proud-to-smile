@@ -4,7 +4,7 @@
 // Structure clones the design reference's service template
 // (reference/screenshots/service-dental-implants.png):
 //   hero → why + benefits + photo → candidacy → options grid →
-//   process + insurance → aftercare + photo → FAQs → related → CTA
+//   process + insurance → aftercare + photo → FAQs → CTA
 //
 // Every optional section is conditional: the real site didn't publish a
 // process, candidacy list, or FAQ set for every service, and inventing one
@@ -17,7 +17,6 @@ import Footer from '../../components/Footer.astro';
 import PageHero from '../../components/PageHero.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CtaSection from '../../components/CtaSection.astro';
-import RelatedServices from '../../components/RelatedServices.astro';
 import FaqAccordion from '../../components/FaqAccordion.astro';
 import ArrowCircle from '../../components/ArrowCircle.astro';
 import StructuredData from '../../components/StructuredData.astro';
@@ -247,8 +246,6 @@ const faqSchema = service.faqs?.length
         </section>
       )
     }
-
-    <RelatedServices slugs={service.related} />
 
     <CtaSection
       heading={`Ready to Talk About ${service.title}?`}

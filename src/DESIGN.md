@@ -132,7 +132,6 @@ homepage language — reuse them rather than hand-rolling equivalent markup.
 - **`FaqAccordion.astro`** — Native `<details>` FAQ list, no JS, no ARIA to sync.
 - **`LocationCard.astro`** — The practice card: address, hours, directions.
 - **`PostCard.astro`** — Blog index card.
-- **`RelatedServices.astro`** — The related-services row closing each service page.
 - **`Breadcrumbs.astro`** — Trail plus its BreadcrumbList JSON-LD.
 - **`ArrowCircle.astro`** — The circular arrow glyph. Decorative (`aria-hidden`),
   inherits `currentColor`. See the rule below.
@@ -230,9 +229,8 @@ composing the shared components — don't invent a fourth layout.
 | Legal | `[legal].astro` | single-column prose |
 
 **Service page section order** — hero → why + benefits + photo → candidacy →
-options grid → process + insurance → aftercare + photo → providers → FAQs →
-related services → CTA. **Every optional section is conditional.** The real
-practice didn't publish a process, candidacy list, or FAQ set for all 14
+options grid → process + insurance → aftercare + photo → FAQs → CTA.
+**Every optional section is conditional.** The real practice didn't publish a process, candidacy list, or FAQ set for all 14
 services, so a service with no source data for a section simply doesn't render
 it. Never fill a gap with invented copy to make the template look complete.
 
