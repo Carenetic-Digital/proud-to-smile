@@ -4,7 +4,7 @@
 // Structure clones the design reference's service template
 // (reference/screenshots/service-dental-implants.png):
 //   hero → why + benefits + photo → candidacy → options grid →
-//   process + insurance → aftercare + photo → providers → FAQs → related → CTA
+//   process + insurance → aftercare + photo → FAQs → related → CTA
 //
 // Every optional section is conditional: the real site didn't publish a
 // process, candidacy list, or FAQ set for every service, and inventing one
@@ -22,7 +22,6 @@ import FaqAccordion from '../../components/FaqAccordion.astro';
 import ArrowCircle from '../../components/ArrowCircle.astro';
 import StructuredData from '../../components/StructuredData.astro';
 import { services } from '../../data/services';
-import { doctors } from '../../data/doctors';
 import { PRACTICE, CITY, STATE, PHONE, PHONE_HREF, ADDRESS, STREET, POSTAL_CODE } from '../../data/site';
 import { focusFor } from '../../data/imageFocus';
 
@@ -30,9 +29,6 @@ export const getStaticPaths = (() =>
   services.map((service) => ({ params: { slug: service.slug }, props: { service } }))) satisfies GetStaticPaths;
 
 const { service } = Astro.props;
-
-// Providers whose source content names them on this service.
-const providers = doctors.filter((d) => d.services.includes(service.slug));
 
 const serviceSchema = {
   name: service.title,
@@ -233,45 +229,13 @@ const faqSchema = service.faqs?.length
       )
     }
 
-    <!-- Providers -->
-    {
-      providers.length > 0 && (
-        <section class="py-[var(--spacing-section)]" aria-labelledby="providers-heading">
-          <div class="container-page">
-            <h2 id="providers-heading">Who Provides This Treatment</h2>
-            <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-              {providers.map((provider) => (
-                <div class="card flex items-center gap-5">
-                  <img
-                    src={provider.image}
-                    alt={provider.imageAlt}
-                    width={provider.imageWidth}
-                    height={provider.imageHeight}
-                    loading="lazy"
-                    class="h-24 w-20 shrink-0 rounded-[var(--radius-sm)] object-cover object-top"
-                  />
-                  <div>
-                    <h3 class="text-xl">
-                      {provider.name}, {provider.credentials}
-                    </h3>
-                    <p class="mt-1 text-sm text-neutral-700">{provider.title}</p>
-                    <a href={`/doctors/${provider.slug}/`} class="link-arrow mt-3">
-                      View Profile
-                      <ArrowCircle />
-                    </a>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-    }
-
     <!-- FAQs -->
     {
       service.faqs && service.faqs.length > 0 && (
-        <section class="pb-[var(--spacing-section)]" aria-labelledby="faq-heading">
+        <section
+          class={service.aftercare ? 'py-[var(--spacing-section)]' : 'pb-[var(--spacing-section)]'}
+          aria-labelledby="faq-heading"
+        >
           <div class="container-page">
             <div class="max-w-3xl">
               <h2 id="faq-heading">{service.title} FAQs</h2>
