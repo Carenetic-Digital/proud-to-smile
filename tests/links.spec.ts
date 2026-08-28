@@ -66,3 +66,22 @@ test('only the LCP image loads eagerly', async ({ page }) => {
   );
   expect(eager.length).toBeLessThanOrEqual(2); // hero + logo
 });
+
+test('no _redirects splat rule shadows an exact rule', async () => {
+  // Cloudflare matches a splat rule ahead of exact rules sharing its prefix,
+  // whatever the file order — this shipped once with `/provider/*` swallowing
+  // the two exact provider rules, sending both providers to the index.
+  const fs = await import('node:fs/promises');
+  const lines = (await fs.readFile('public/_redirects', 'utf8'))
+    .split('\n')
+    .map((l) => l.trim())
+    .filter((l) => l && !l.startsWith('#'));
+
+  const froms = lines.map((l) => l.split(/\s+/)[0]);
+  const splatPrefixes = froms.filter((f) => f.endsWith('/*')).map((f) => f.slice(0, -1));
+
+  for (const prefix of splatPrefixes) {
+    const shadowed = froms.filter((f) => !f.endsWith('/*') && f.startsWith(prefix));
+    expect(shadowed, `${prefix}* would shadow ${shadowed.join(', ')}`).toEqual([]);
+  }
+});

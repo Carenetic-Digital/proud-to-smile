@@ -5,16 +5,24 @@
 # Old URL patterns are from reference/content-proudtosmile.md.
 #
 # Format: /from  /to  status
+#
+# CAUTION: a splat rule shadows exact rules sharing its prefix, whatever the
+# file order — verified on the staging Worker, where `/provider/*` was
+# swallowing the two exact provider rules listed above it and sending both
+# providers to the /doctors/ index. So never pair `/prefix/*` with exact
+# `/prefix/<slug>` rules: enumerate the slugs, or accept the splat for all of
+# them. `/post/*` below is safe because no exact /post/ rule competes with it.
 
 # --- Blog: the old site served posts at /post/<slug> -----------------------
 /post/*                     /blog/:splat/                        301
 /blog-archive               /blog/                               301
 
 # --- Providers: /provider/<slug> and the /providers index ------------------
+# The old site published exactly these two providers, so enumerating them
+# costs no coverage and keeps each landing on its own page.
 /provider/patricia-swaintek-lamb-dmd  /doctors/patricia-swaintek-lamb-dmd/  301
 /provider/karima-west-rdh             /doctors/karima-west-rdh/             301
 /providers                            /doctors/                             301
-/provider/*                           /doctors/                             301
 
 # --- Contact: the old site had /contact-us; this build folds contact detail
 #     into the location page (single practice, per client decision) ----------
@@ -37,7 +45,6 @@
 /content/tmj-or-tmd                        /services/                                       301
 /content/velscope-oral-cancer-screening    /service/cleaning/                               301
 /content/proud-to-smile-celebration-party  /blog/come-and-celebrate-our-exciting-news/      301
-/content/*                                 /services/                                       301
 
 # --- Legal: the old site used non-standard slugs ----------------------------
 /your-privacy               /privacy-policy/                     301
