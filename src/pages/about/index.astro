@@ -1,0 +1,143 @@
+---
+// About — interior content page template (reference/screenshots/about.png).
+// Copy is sourced from reference/content-proudtosmile.md section 2.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import FeatureCards from '../../components/FeatureCards.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import { CITY, STATE, RATING, TAGLINES } from '../../data/site';
+import { focusFor } from '../../data/imageFocus';
+
+const careCategories = [
+  {
+    title: 'Preventive Care',
+    text: 'Routine check-ups and dental cleanings that keep problems small — or stop them starting at all.',
+    href: '/service/cleaning/',
+    label: 'Explore Cleanings',
+  },
+  {
+    title: 'Restorative Treatments',
+    text: 'Dental implants, crowns, and dentures that rebuild what decay, damage, or tooth loss took away.',
+    href: '/service/dental-implants/',
+    label: 'Explore Restorative Care',
+  },
+  {
+    title: 'Cosmetic Dentistry',
+    text: 'A beautiful smile boosts confidence and self-esteem — veneers, whitening, bonding, and alignment.',
+    href: '/service/cosmetic-and-restorative-dentistry/',
+    label: 'Explore Cosmetic Care',
+  },
+];
+---
+
+<BaseLayout
+  title={`About Our ${CITY}, ${STATE} Dental Practice | Proud To Smile`}
+  description="Proud To Smile Dentistry takes a holistic approach to dental care, because oral health affects your whole body. Meet the practice in Bernardsville, NJ."
+>
+  <Header currentPath="/about/" />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'About' }]} />
+
+    <PageHero
+      title="Committed to Your Dental Health"
+      intro="At Proud to Smile Dentistry, Patricia Swaintek-Lamb, DMD provides world-class service and the latest dental technology to encourage healthy and beautiful smiles."
+      image="/images/proudtosmile/office-collage.webp"
+      imageAlt="Collage of the Proud To Smile Dentistry office and team with a patient"
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="holistic-heading">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
+          <div class="lg:col-span-2">
+            <h2 id="holistic-heading">A Holistic Approach to Dental Treatment</h2>
+            <p class="mt-6 text-neutral-700">
+              The team at Proud to Smile Dentistry takes a holistic approach to dental treatment
+              because oral health affects the health of a person&rsquo;s whole body. That means we
+              look past the tooth in front of us — at your airway, your bite, your habits, and how
+              your dental health connects to the rest of you.
+            </p>
+            <p class="mt-4 text-neutral-700">
+              Dr. Patricia Swaintek-Lamb has been practicing for over 25 years and specializes in
+              cosmetic dentistry and sleep apnea treatment. She works alongside a close-knit team of
+              hygienists, assistants, and patient care coordinators who see the same patients year
+              after year.
+            </p>
+            <a href="/doctors/" class="link-arrow mt-8">
+              Meet Our Doctors
+              <ArrowCircle />
+            </a>
+          </div>
+
+          <aside class="card border-t-4 border-t-accent-200">
+            <p class="text-4xl font-bold text-primary-700">{RATING}</p>
+            <p class="mt-1 text-sm font-semibold uppercase tracking-wide text-neutral-900">
+              Average rating on Google
+            </p>
+            <ul class="mt-6 space-y-4">
+              {
+                TAGLINES.map((line) => (
+                  <li class="border-l-4 border-primary-200 pl-4 text-sm italic text-neutral-700">
+                    &ldquo;{line}&rdquo;
+                  </li>
+                ))
+              }
+            </ul>
+            <a href="/testimonials/" class="link-arrow mt-6">
+              Read Patient Reviews
+              <ArrowCircle />
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="care-heading">
+      <div class="container-page">
+        <h2 id="care-heading">The Care We Provide</h2>
+        <p class="mt-6 max-w-3xl text-neutral-700">
+          Three categories cover most of what patients come to us for — and all of it happens under
+          one roof in {CITY}.
+        </p>
+        <div class="mt-12">
+          <FeatureCards cards={careCategories} columns={3} />
+        </div>
+      </div>
+    </section>
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="comfort-heading">
+      <div class="container-page">
+        <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <img
+            src="/images/proudtosmile/patient-getting-treated.webp"
+            alt="A patient being treated in comfort at Proud To Smile Dentistry"
+            width="1420"
+            height="700"
+            loading="lazy"
+            class={`panel h-64 w-full object-cover ${focusFor('patient-getting-treated.webp')} sm:h-80 lg:h-[24rem]`}
+          />
+          <div>
+            <h2 id="comfort-heading">Comfort Is Part of the Treatment</h2>
+            <p class="mt-6 text-neutral-700">
+              Hand warmers, scented pillows, and entertainment like headphones and television help
+              make dental visits pleasant. If the dentist has never been your favourite place to be,
+              tell us — we will work around it.
+            </p>
+            <a href="/patient-center/new-patients/" class="link-arrow mt-8">
+              What to Expect on Your First Visit
+              <ArrowCircle />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

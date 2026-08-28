@@ -1,0 +1,80 @@
+---
+// Offers & Promotions.
+//
+// The real practice publishes no active offers. Inventing a discount would be
+// a serious content-accuracy breach — and a legal one. This page explains how
+// to hear about offers and routes to the real cost pages.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaSection from '../components/CtaSection.astro';
+import FeatureCards from '../components/FeatureCards.astro';
+import ArrowCircle from '../components/ArrowCircle.astro';
+import { PHONE, PHONE_HREF, SOCIAL } from '../data/site';
+
+const cards = [
+  { title: 'Insurance', text: 'We accept all major insurance providers — let us verify your plan.', href: '/patient-center/insurance/', label: 'Am I Covered?' },
+  { title: 'Financial Options', text: 'Ways to spread the cost of a larger treatment plan.', href: '/patient-center/financial-options/', label: 'See Options' },
+  { title: 'Pricing', text: 'How we estimate cost before treatment begins.', href: '/patient-center/pricing/', label: 'Learn More' },
+];
+---
+
+<BaseLayout
+  title="Offers & Promotions | Proud To Smile Dentistry"
+  description="Current offers at Proud To Smile Dentistry in Bernardsville, NJ, plus how we help make treatment affordable. Call 908-221-1188."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Offers & Promotions' }]} />
+
+    <PageHero
+      title="Offers &amp; Promotions"
+      intro="Making treatment affordable matters to us. Here's how to hear about current offers — and what we can do regardless."
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="current-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="current-heading">Current Offers</h2>
+          <p class="mt-6 text-neutral-700">
+            We don&rsquo;t have a promotion running at the moment. Offers come and go through the
+            year, and the fastest way to hear about one is to follow us or simply ask when you call.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href={SOCIAL.facebook} target="_blank" rel="noopener" class="btn btn-outline">
+              Follow on Facebook
+              <ArrowCircle />
+            </a>
+            <a href={SOCIAL.instagram} target="_blank" rel="noopener" class="btn btn-outline">
+              Follow on Instagram
+              <ArrowCircle />
+            </a>
+          </div>
+          <p class="mt-8 text-neutral-700">
+            Or call <a href={PHONE_HREF} class="font-semibold text-primary-700 hover:underline">{PHONE}</a>
+            and ask — our front desk will tell you exactly what applies to the treatment you need.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="affordable-heading">
+      <div class="container-page">
+        <h2 id="affordable-heading">Making Care Affordable</h2>
+        <p class="mt-6 max-w-3xl text-neutral-700">
+          Promotion or not, these are the levers that usually matter most.
+        </p>
+        <div class="mt-12">
+          <FeatureCards cards={cards} columns={3} />
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

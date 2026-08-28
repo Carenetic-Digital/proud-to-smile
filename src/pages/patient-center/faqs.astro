@@ -1,0 +1,104 @@
+---
+// FAQs — clones the reference's FAQ template
+// (reference/screenshots/patient-resources-faqs.png).
+//
+// Every answer is grounded in reference/content-proudtosmile.md: hours,
+// address, booking links, the intake form, and treatment details taken from
+// the service pages. No invented policies.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { PHONE, ADDRESS } from '../../data/site';
+
+const groups = [
+  {
+    heading: 'Appointments & Visits',
+    faqs: [
+      { q: 'How do I book an appointment?', a: `Call the practice on ${PHONE}, or book online through ZocDoc using the Schedule Appointment button at the top of any page.` },
+      { q: 'What are your office hours?', a: 'Monday 8:00 AM–12:00 PM, Tuesday and Wednesday 9:00 AM–6:00 PM, Thursday 7:00 AM–4:00 PM, and Friday 8:00 AM–12:00 PM. We are closed Saturday and Sunday.' },
+      { q: 'Where are you located?', a: `We are at ${ADDRESS}. There is one office and one team — you will see the same faces every visit.` },
+      { q: 'Do you see dental emergencies?', a: 'Yes. We make an effort to leave room in the schedule for patients who need immediate assistance — chipped teeth, broken restorations, and sudden pain.' },
+      { q: 'How often should I come in for a cleaning?', a: 'Twice yearly, at six-month intervals. Patients with gum disease or decay-prone teeth may need to come in more often.' },
+    ],
+  },
+  {
+    heading: 'Before Your First Visit',
+    faqs: [
+      { q: 'What should I bring to my first appointment?', a: 'Your dental insurance card, a list of any medications and supplements, recent X-ray results if you have them, documentation of any symptoms, your previous dentist’s information if applicable, and any questions you want to raise.' },
+      { q: 'Can I complete paperwork before I arrive?', a: 'Yes. We use one online New Patient Health and Dental History Intake Form. Completing it in advance means your appointment starts on time.' },
+      { q: 'I get anxious at the dentist. What can you do?', a: 'Tell us when you book. Hand warmers, scented pillows, and entertainment like headphones and television help make visits pleasant, and Dr. Swaintek-Lamb believes dental care should never be unpleasant or intimidating.' },
+    ],
+  },
+  {
+    heading: 'Insurance & Cost',
+    faqs: [
+      { q: 'Do you take my insurance?', a: `We accept all major insurance providers. Plans vary a great deal in what they cover, so call ${PHONE} with your card to hand and we will verify your specific benefits.` },
+      { q: 'Will I know the cost before treatment starts?', a: 'Yes. You receive an itemised treatment plan with your insurance contribution applied before any work begins.' },
+      { q: 'What if I do not have insurance?', a: 'Ask about financial options when you call. Our patient care coordinator handles treatment and financial planning and can work through the possibilities with you.' },
+    ],
+  },
+  {
+    heading: 'Treatments',
+    faqs: [
+      { q: 'How long do veneers last?', a: 'Veneers last 12–15 years on average with proper maintenance — brushing, flossing, and biannual visits. Avoid biting your nails and chewing ice.' },
+      { q: 'How long does clear aligner treatment take?', a: 'Most people complete treatment in 12–18 months, but depending on the issues addressed and your goals it may take longer. Aligners are worn 20–22 hours a day.' },
+      { q: 'How long does teeth whitening last?', a: 'An average of three years, maintained with twice-daily brushing, regular flossing, and six-month checkups. The in-office appointment takes about two hours.' },
+      { q: 'Am I a candidate for dental implants?', a: 'Good candidates generally have good overall health, adequate jawbone density, healthy gums, and are non-smokers. Implants are for adults only. Dr. Swaintek-Lamb will assess your specific situation.' },
+    ],
+  },
+];
+
+const faqSchema = {
+  mainEntity: groups.flatMap((g) =>
+    g.faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    }))
+  ),
+};
+---
+
+<BaseLayout
+  title="Frequently Asked Questions | Proud To Smile Dentistry"
+  description="Answers about appointments, office hours, insurance, cost, and treatment at Proud To Smile Dentistry in Bernardsville, NJ."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Patient Center', href: '/patient-center/' }, { label: 'FAQs' }]} />
+
+    <PageHero
+      title="Frequently Asked Questions"
+      intro="The questions our front desk hears most often — answered. If yours isn't here, just call us."
+      cta
+    />
+
+    <section class="py-[var(--spacing-section)]">
+      <div class="container-page">
+        <div class="max-w-3xl space-y-16">
+          {
+            groups.map((group) => (
+              <div>
+                <h2>{group.heading}</h2>
+                <div class="mt-8">
+                  <FaqAccordion faqs={group.faqs} />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+  <StructuredData type="FAQPage" data={faqSchema} />
+</BaseLayout>

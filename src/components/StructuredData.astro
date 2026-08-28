@@ -13,7 +13,21 @@
  */
 
 interface Props {
-  type: 'Organization' | 'LocalBusiness' | 'Dentist' | 'WebSite' | 'WebPage' | 'BreadcrumbList' | 'FAQPage' | 'Person' | 'Review';
+  type:
+    | 'Organization'
+    | 'LocalBusiness'
+    | 'Dentist'
+    | 'WebSite'
+    | 'WebPage'
+    | 'BreadcrumbList'
+    | 'FAQPage'
+    | 'Person'
+    | 'Review'
+    | 'MedicalProcedure'
+    | 'BlogPosting'
+    | 'Blog'
+    | 'ImageGallery'
+    | 'ItemList';
   data: Record<string, unknown>;
 }
 
@@ -26,4 +40,4 @@ const structuredData = {
 };
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} is:inline />

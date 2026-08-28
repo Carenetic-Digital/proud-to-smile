@@ -1,0 +1,44 @@
+---
+// Locations index. The practice has a single office, so this page is a thin
+// wrapper over the Bernardsville location rather than the reference's
+// multi-location grid — per the client's single-location decision.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import LocationCard from '../../components/LocationCard.astro';
+import { CITY, STATE, ADDRESS } from '../../data/site';
+---
+
+<BaseLayout
+  title={`Our Office in ${CITY}, ${STATE} | Proud To Smile Dentistry`}
+  description={`Proud To Smile Dentistry is located at ${ADDRESS}. Find office hours, directions, and contact details.`}
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Locations' }]} />
+
+    <PageHero
+      title="Find Us"
+      intro={`One practice, one team — we see every patient at our ${CITY}, ${STATE} office.`}
+      image="/images/proudtosmile/dental-services.webp"
+      imageAlt={`Proud To Smile Dentistry in ${CITY}, ${STATE}`}
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="office-heading">
+      <div class="container-page">
+        <h2 id="office-heading" class="sr-only">Our office</h2>
+        <div class="max-w-md">
+          <LocationCard />
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

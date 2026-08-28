@@ -1,0 +1,101 @@
+---
+// Insurance.
+//
+// The real site publishes only "We accept all major insurance providers" — no
+// carrier list. Do NOT enumerate carriers here; ask patients to call so the
+// front desk can verify their specific plan.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import FeatureCards from '../../components/FeatureCards.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import { PHONE, PHONE_HREF } from '../../data/site';
+
+const nextSteps = [
+  { title: 'Pricing', text: 'How we estimate the cost of treatment before you commit.', href: '/patient-center/pricing/', label: 'Learn More' },
+  { title: 'Financial Options', text: 'Ways to spread the cost of a larger treatment plan.', href: '/patient-center/financial-options/', label: 'See Options' },
+  { title: 'FAQs', text: 'Answers to what our front desk gets asked most.', href: '/patient-center/faqs/', label: 'Read FAQs' },
+];
+---
+
+<BaseLayout
+  title="Dental Insurance in Bernardsville, NJ | Proud To Smile"
+  description="Proud To Smile Dentistry accepts all major insurance providers. Call 908-221-1188 and we'll verify your specific plan and benefits before your visit."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Patient Center', href: '/patient-center/' }, { label: 'Insurance' }]} />
+
+    <PageHero
+      title="Am I Covered?"
+      intro="We accept all major insurance providers and work to help you get the most from your coverage."
+      image="/images/proudtosmile/smiling-patient-with-provider.webp"
+      imageAlt="A patient care coordinator helping a patient at Proud To Smile Dentistry"
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="insurance-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="insurance-heading">We Accept All Major Insurance Providers</h2>
+          <p class="mt-6 text-neutral-700">
+            Dental plans differ enormously in what they cover and at what percentage, so rather than
+            publish a list that might not reflect your specific policy, we&rsquo;d rather check it
+            for you. Call the office with your plan details and our patient care coordinator will
+            confirm your coverage before you commit to anything.
+          </p>
+
+          <h3 class="mt-10 text-xl">Have This Handy When You Call</h3>
+          <ul class="mt-4 space-y-3">
+            {
+              [
+                'Your dental insurance card',
+                'The name of the primary policyholder and their date of birth',
+                'Your group or member number',
+                'Any treatment you already know you need',
+              ].map((item) => (
+                <li class="flex gap-3 text-neutral-700">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="card mt-10 border-t-4 border-t-accent-200">
+            <h3 class="text-xl">Let Us Check Your Plan</h3>
+            <p class="mt-3 text-neutral-700">
+              Call <a href={PHONE_HREF} class="font-semibold text-primary-700 hover:underline">{PHONE}</a>
+              and we&rsquo;ll verify your benefits and explain what your plan covers, in plain terms.
+            </p>
+            <a href={PHONE_HREF} class="btn btn-primary mt-6">
+              Call {PHONE}
+              <ArrowCircle />
+            </a>
+          </div>
+
+          <p class="mt-10 text-sm italic text-neutral-700">
+            No insurance? That doesn&rsquo;t have to stop you — ask us about financial options when
+            you call.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="next-heading">
+      <div class="container-page">
+        <h2 id="next-heading">Next Steps</h2>
+        <div class="mt-12">
+          <FeatureCards cards={nextSteps} columns={3} />
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

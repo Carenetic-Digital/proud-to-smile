@@ -1,0 +1,299 @@
+---
+// Service page template — one page for each of the 14 real services.
+//
+// Structure clones the design reference's service template
+// (reference/screenshots/service-dental-implants.png):
+//   hero → why + benefits + photo → candidacy → options grid →
+//   process + insurance → aftercare + photo → providers → FAQs → related → CTA
+//
+// Every optional section is conditional: the real site didn't publish a
+// process, candidacy list, or FAQ set for every service, and inventing one
+// would violate the content-accuracy rules. Sections with no source data in
+// src/data/services.ts simply don't render.
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import RelatedServices from '../../components/RelatedServices.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { services } from '../../data/services';
+import { doctors } from '../../data/doctors';
+import { PRACTICE, CITY, STATE, PHONE, PHONE_HREF, ADDRESS, STREET, POSTAL_CODE } from '../../data/site';
+import { focusFor } from '../../data/imageFocus';
+
+export const getStaticPaths = (() =>
+  services.map((service) => ({ params: { slug: service.slug }, props: { service } }))) satisfies GetStaticPaths;
+
+const { service } = Astro.props;
+
+// Providers whose source content names them on this service.
+const providers = doctors.filter((d) => d.services.includes(service.slug));
+
+const serviceSchema = {
+  name: service.title,
+  description: service.heroIntro,
+  url: new URL(`/service/${service.slug}/`, Astro.site).href,
+  provider: {
+    '@type': 'Dentist',
+    name: PRACTICE,
+    telephone: '+1-908-221-1188',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: STREET,
+      addressLocality: CITY,
+      addressRegion: STATE,
+      postalCode: POSTAL_CODE,
+      addressCountry: 'US',
+    },
+  },
+};
+
+const faqSchema = service.faqs?.length
+  ? {
+      mainEntity: service.faqs.map((f) => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    }
+  : null;
+---
+
+<BaseLayout title={service.seoTitle} description={service.description} image={service.image}>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Services', href: '/services/' }, { label: service.title }]} />
+
+    <PageHero title={`${service.title} in ${CITY}, ${STATE}`} intro={service.heroIntro} cta />
+
+    <!-- Why + benefits, photo alongside -->
+    <section class="py-[var(--spacing-section)]" aria-labelledby="why-heading">
+      <div class="container-page">
+        <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <img
+            src={service.image}
+            alt={service.imageAlt}
+            width="1420"
+            height="700"
+            loading="lazy"
+            class={`panel h-64 w-full object-cover ${focusFor(service.image)} sm:h-80 lg:h-[24rem]`}
+          />
+          <div>
+            <h2 id="why-heading">{service.why.heading}</h2>
+            <p class="mt-6 text-neutral-700">{service.why.intro}</p>
+            <ul class="mt-6 space-y-3">
+              {
+                service.why.benefits.map((benefit) => (
+                  <li class="flex gap-3 text-neutral-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                    <span>{benefit}</span>
+                  </li>
+                ))
+              }
+            </ul>
+            <a href={PHONE_HREF} class="btn btn-primary mt-8">
+              Call {PHONE}
+              <ArrowCircle />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Candidacy / symptoms -->
+    {
+      service.candidacy && (
+        <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="candidacy-heading">
+          <div class="container-page">
+            <div class="max-w-3xl">
+              <h2 id="candidacy-heading">{service.candidacy.heading}</h2>
+              <p class="mt-6 text-neutral-700">{service.candidacy.intro}</p>
+              <h3 class="mt-10 text-xl">{service.candidacy.listHeading}</h3>
+              <ul class="mt-4 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+                {service.candidacy.items.map((item) => (
+                  <li class="flex gap-3 border-b border-border py-2 text-neutral-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              {service.candidacy.note && (
+                <p class="mt-8 text-sm italic text-neutral-700">{service.candidacy.note}</p>
+              )}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Options grid -->
+    <section class="py-[var(--spacing-section)]" aria-labelledby="options-heading">
+      <div class="container-page">
+        <h2 id="options-heading">{service.options.heading}</h2>
+        <div class="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-2">
+          {
+            service.options.items.map((item) => (
+              <div class="card">
+                <h3 class="text-xl">{item.title}</h3>
+                <p class="mt-3 text-sm text-neutral-700">{item.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Process + insurance -->
+    {
+      service.process && (
+        <section class="pb-[var(--spacing-section)]" aria-labelledby="process-heading">
+          <div class="container-page">
+            <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+              <div>
+                <h2 id="process-heading" class="text-2xl">{service.process.heading}</h2>
+                <ol class="mt-6 space-y-4">
+                  {service.process.steps.map((step, i) => (
+                    <li class="flex gap-4 text-neutral-700">
+                      <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary-600 text-xs font-semibold text-white">
+                        {i + 1}
+                      </span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+              <div>
+                <h2 class="text-2xl">Insurance &amp; Payment</h2>
+                <p class="mt-6 text-neutral-700">
+                  We accept all major insurance providers and will help you understand what your plan
+                  covers before treatment begins.
+                </p>
+                <ul class="mt-6 space-y-3">
+                  <li class="flex gap-3 text-neutral-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                    <a href="/patient-center/insurance/" class="text-primary-700 hover:underline">
+                      Check whether your plan is accepted
+                    </a>
+                  </li>
+                  <li class="flex gap-3 text-neutral-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                    <a href="/patient-center/financial-options/" class="text-primary-700 hover:underline">
+                      Review financial and payment options
+                    </a>
+                  </li>
+                  <li class="flex gap-3 text-neutral-700">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                    <a href="/patient-center/pricing/" class="text-primary-700 hover:underline">
+                      See how pricing works at our practice
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Aftercare + photo -->
+    {
+      service.aftercare && (
+        <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="aftercare-heading">
+          <div class="container-page">
+            <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              <div>
+                <h2 id="aftercare-heading">{service.aftercare.heading}</h2>
+                {service.aftercare.intro && <p class="mt-6 text-neutral-700">{service.aftercare.intro}</p>}
+                <ul class="mt-6 space-y-3">
+                  {service.aftercare.tips.map((tip) => (
+                    <li class="flex gap-3 text-neutral-700">
+                      <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                      <span>{tip}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <img
+                src={service.secondaryImage ?? service.image}
+                alt={service.secondaryImageAlt ?? service.imageAlt}
+                width="1420"
+                height="700"
+                loading="lazy"
+                class={`panel h-64 w-full object-cover ${focusFor(service.image)} sm:h-80 lg:h-[22rem]`}
+              />
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Providers -->
+    {
+      providers.length > 0 && (
+        <section class="py-[var(--spacing-section)]" aria-labelledby="providers-heading">
+          <div class="container-page">
+            <h2 id="providers-heading">Who Provides This Treatment</h2>
+            <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              {providers.map((provider) => (
+                <div class="card flex items-center gap-5">
+                  <img
+                    src={provider.image}
+                    alt={provider.imageAlt}
+                    width={provider.imageWidth}
+                    height={provider.imageHeight}
+                    loading="lazy"
+                    class="h-24 w-20 shrink-0 rounded-[var(--radius-sm)] object-cover object-top"
+                  />
+                  <div>
+                    <h3 class="text-xl">
+                      {provider.name}, {provider.credentials}
+                    </h3>
+                    <p class="mt-1 text-sm text-neutral-700">{provider.title}</p>
+                    <a href={`/doctors/${provider.slug}/`} class="link-arrow mt-3">
+                      View Profile
+                      <ArrowCircle />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- FAQs -->
+    {
+      service.faqs && service.faqs.length > 0 && (
+        <section class="pb-[var(--spacing-section)]" aria-labelledby="faq-heading">
+          <div class="container-page">
+            <div class="max-w-3xl">
+              <h2 id="faq-heading">{service.title} FAQs</h2>
+              <div class="mt-10">
+                <FaqAccordion faqs={service.faqs} />
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <RelatedServices slugs={service.related} />
+
+    <CtaSection
+      heading={`Ready to Talk About ${service.title}?`}
+      text={`Call us at ${PHONE} or book online. We're at ${ADDRESS}.`}
+    />
+  </main>
+
+  <Footer />
+
+  <StructuredData type="MedicalProcedure" data={serviceSchema} />
+  {faqSchema && <StructuredData type="FAQPage" data={faqSchema} />}
+</BaseLayout>

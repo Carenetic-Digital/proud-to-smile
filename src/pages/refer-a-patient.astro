@@ -1,0 +1,71 @@
+---
+// Refer a Patient.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaSection from '../components/CtaSection.astro';
+import ArrowCircle from '../components/ArrowCircle.astro';
+import { PHONE, PHONE_HREF, ADDRESS, ZOCDOC_URL } from '../data/site';
+---
+
+<BaseLayout
+  title="Refer a Patient | Proud To Smile Dentistry"
+  description="Refer a patient, friend, or family member to Proud To Smile Dentistry in Bernardsville, NJ. Call 908-221-1188."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Refer a Patient' }]} />
+
+    <PageHero
+      title="Refer a Patient"
+      intro="A referral from someone who already trusts us is the highest compliment this practice gets."
+      image="/images/proudtosmile/smiling-patient-with-provider.webp"
+      imageAlt="A provider and patient at Proud To Smile Dentistry"
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="refer-heading">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 id="refer-heading">Referring a Friend or Family Member</h2>
+            <p class="mt-6 text-neutral-700">
+              The simplest way is to have them call us and mention your name — we&rsquo;ll take it
+              from there and make sure they&rsquo;re looked after.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a href={PHONE_HREF} class="btn btn-primary">
+                Call {PHONE}
+                <ArrowCircle />
+              </a>
+              <a href={ZOCDOC_URL} target="_blank" rel="noopener" class="btn btn-outline">
+                Book Their Appointment
+                <ArrowCircle />
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <h2>Referring Clinicians</h2>
+            <p class="mt-6 text-neutral-700">
+              Dr. Swaintek-Lamb accepts referrals for cosmetic cases, implant placement, oral
+              surgery, and sleep apnea and airway care. Call the office directly to discuss a case
+              or arrange records transfer.
+            </p>
+            <p class="mt-4 text-sm text-neutral-700">{ADDRESS}</p>
+            <a href="/doctors/patricia-swaintek-lamb-dmd/" class="link-arrow mt-6">
+              About Dr. Swaintek-Lamb
+              <ArrowCircle />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

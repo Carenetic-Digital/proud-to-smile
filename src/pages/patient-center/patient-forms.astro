@@ -1,0 +1,88 @@
+---
+// Patient Forms.
+//
+// The real practice uses a single hosted Weave/wv3.io intake packet rather
+// than downloadable PDFs (reference/content-proudtosmile.md section 8). This
+// page links out to that exact form and lists its real sections — it does not
+// invent a set of separate downloadable forms.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import { PATIENT_FORMS_URL, PHONE, PHONE_HREF } from '../../data/site';
+
+const sections = [
+  'Patient & Insurance',
+  'Insurance Information',
+  'Medical History',
+  'Dental Information',
+  'Female Medical Conditions',
+  'Bite and jaw joint checklist',
+  'Consent for Services and Financial Policy',
+  'Consent for Internet Communications',
+  'HIPAA Acknowledgement',
+];
+---
+
+<BaseLayout
+  title="Patient Forms in Bernardsville, NJ | Proud To Smile"
+  description="Complete your New Patient Health and Dental History Intake Form online before your visit to Proud To Smile Dentistry in Bernardsville, NJ."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Patient Center', href: '/patient-center/' }, { label: 'Patient Forms' }]} />
+
+    <PageHero
+      title="Patient Forms"
+      intro="Save time by completing your new-patient paperwork online before you arrive. It takes about ten minutes and means your appointment starts on time."
+      image="/images/proudtosmile/dental-tools.webp"
+      imageAlt="Proud To Smile Dentistry treatment room ready for a new patient"
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="form-heading">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 id="form-heading">New Patient Health and Dental History Intake Form</h2>
+            <p class="mt-6 text-neutral-700">
+              We use one comprehensive online intake packet rather than a stack of separate
+              downloads. You can complete it on your phone, save as you go, and submit it before
+              your appointment.
+            </p>
+            <a href={PATIENT_FORMS_URL} target="_blank" rel="noopener" class="btn btn-primary mt-8">
+              Start My Forms
+              <ArrowCircle />
+            </a>
+            <p class="mt-6 text-sm text-neutral-700">
+              Trouble with the form? Call us on
+              <a href={PHONE_HREF} class="font-semibold text-primary-700 hover:underline">{PHONE}</a>
+              and we will take your details over the phone.
+            </p>
+          </div>
+
+          <div class="card border-t-4 border-t-accent-200">
+            <h3 class="text-xl">What the Form Covers</h3>
+            <ol class="mt-4 space-y-2 text-sm text-neutral-700">
+              {
+                sections.map((section, i) => (
+                  <li class="flex gap-3 border-b border-border pb-2 last:border-0">
+                    <span class="font-semibold text-primary-700">{i + 1}.</span>
+                    <span>{section}</span>
+                  </li>
+                ))
+              }
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

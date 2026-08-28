@@ -1,0 +1,51 @@
+---
+// component-builder: Breadcrumbs
+// Purpose: Interior-page breadcrumb trail plus its BreadcrumbList JSON-LD, so
+// deep pages report their hierarchy to search engines.
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+interface Props {
+  crumbs: Crumb[];
+}
+
+const { crumbs } = Astro.props;
+const all: Crumb[] = [{ label: 'Home', href: '/' }, ...crumbs];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: all.map((c, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: c.label,
+    ...(c.href ? { item: new URL(c.href, Astro.site).href } : {}),
+  })),
+};
+---
+
+<nav aria-label="Breadcrumb" class="container-page pt-6">
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-neutral-600">
+    {
+      all.map((crumb, i) => (
+        <li class="flex items-center gap-2">
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {crumb.href ? (
+            <a href={crumb.href} class="hover:text-primary-700 hover:underline">
+              {crumb.label}
+            </a>
+          ) : (
+            <span aria-current="page" class="text-neutral-900">
+              {crumb.label}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

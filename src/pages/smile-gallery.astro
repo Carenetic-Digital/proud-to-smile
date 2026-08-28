@@ -1,0 +1,91 @@
+---
+// Smile Gallery — the practice's 12 real before/after cosmetic and restorative
+// cases (30 photos), from reference/content-proudtosmile.md section 6.
+//
+// The real site publishes no per-case captions describing the procedure, so we
+// don't invent any — the images are labelled by case number, as they are on the
+// live site.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaSection from '../components/CtaSection.astro';
+import StructuredData from '../components/StructuredData.astro';
+import { PRACTICE } from '../data/site';
+
+// Case -> photo count, exactly as captured from the live gallery.
+const cases = [
+  { n: 1, photos: 4 }, { n: 2, photos: 6 }, { n: 3, photos: 2 }, { n: 4, photos: 2 },
+  { n: 5, photos: 2 }, { n: 6, photos: 2 }, { n: 7, photos: 2 }, { n: 8, photos: 2 },
+  { n: 9, photos: 2 }, { n: 10, photos: 2 }, { n: 11, photos: 2 }, { n: 12, photos: 2 },
+];
+
+const total = cases.reduce((sum, c) => sum + c.photos, 0);
+
+const gallerySchema = {
+  name: `${PRACTICE} Smile Gallery`,
+  description: `${cases.length} real patient cosmetic and restorative cases.`,
+  url: new URL('/smile-gallery/', Astro.site).href,
+};
+---
+
+<BaseLayout
+  title={`Smile Gallery | ${PRACTICE} in Bernardsville, NJ`}
+  description="Real before-and-after results from cosmetic and restorative treatment at Proud To Smile Dentistry in Bernardsville, NJ."
+  image="/images/proudtosmile/gallery/patient-1-1.jpeg"
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Smile Gallery' }]} />
+
+    <PageHero
+      title="Smile Gallery"
+      intro="Our patients choose Proud To Smile Dentistry because we offer the best restorative and cosmetic treatment options in the Bernardsville area."
+      cta
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="gallery-heading">
+      <div class="container-page">
+        <h2 id="gallery-heading" class="sr-only">Patient cases</h2>
+        <p class="max-w-3xl text-neutral-700">
+          {cases.length} real patient cases, {total} photographs. Every image is of a patient treated
+          at our {PRACTICE} office.
+        </p>
+
+        <div class="mt-12 space-y-14">
+          {
+            cases.map((c) => (
+              <div>
+                <h3 class="text-xl">Case {c.n}</h3>
+                <ul class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                  {Array.from({ length: c.photos }).map((_, i) => (
+                    <li>
+                      <img
+                        src={`/images/proudtosmile/gallery/patient-${c.n}-${i + 1}.jpeg`}
+                        alt={`Proud To Smile Dentistry patient case ${c.n}, photo ${i + 1}`}
+                        width="500"
+                        height="333"
+                        loading="lazy"
+                        class="h-auto w-full rounded-[var(--radius-md)] border border-border object-cover"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <CtaSection
+      heading="Want Results Like These?"
+      text="Book a consultation and we'll talk through what's realistic for your smile."
+    />
+  </main>
+
+  <Footer />
+  <StructuredData type="ImageGallery" data={gallerySchema} />
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+// component-builder: FeatureCards
+// Purpose: The reference's 3/4-column card row with a mint accent rule across
+// the card top (reference/screenshots/patient-resources-new-patients.png).
+import ArrowCircle from './ArrowCircle.astro';
+
+export interface FeatureCard {
+  title: string;
+  text: string;
+  href: string;
+  label?: string;
+  external?: boolean;
+}
+
+interface Props {
+  cards: FeatureCard[];
+  columns?: 2 | 3 | 4;
+}
+
+const { cards, columns = 3 } = Astro.props;
+const colClass = { 2: 'sm:grid-cols-2', 3: 'sm:grid-cols-2 lg:grid-cols-3', 4: 'sm:grid-cols-2 lg:grid-cols-4' }[columns];
+---
+
+<div class:list={['grid grid-cols-1 gap-6', colClass]}>
+  {
+    cards.map((card) => (
+      <div class="card flex flex-col border-t-4 border-t-accent-200">
+        <h3 class="text-xl">{card.title}</h3>
+        <p class="mt-3 flex-1 text-sm text-neutral-700">{card.text}</p>
+        <a
+          href={card.href}
+          class="link-arrow mt-6"
+          {...card.external ? { target: '_blank', rel: 'noopener' } : {}}
+        >
+          {card.label ?? 'Learn More'}
+          <ArrowCircle />
+        </a>
+      </div>
+    ))
+  }
+</div>

@@ -1,0 +1,71 @@
+---
+// Blog index — card grid, matching the reference's blog index
+// (reference/screenshots/blog-index.png).
+//
+// Draft posts (the 20 whose body text hasn't been migrated yet) are excluded
+// from this listing; their routes still resolve for old inbound links.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import PostCard from '../../components/PostCard.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { getCollection } from 'astro:content';
+import { PRACTICE } from '../../data/site';
+
+const posts = (await getCollection('blog'))
+  .filter((p) => !p.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const blogSchema = {
+  name: `${PRACTICE} Blog`,
+  url: new URL('/blog/', Astro.site).href,
+  blogPost: posts.slice(0, 20).map((p) => ({
+    '@type': 'BlogPosting',
+    headline: p.data.title,
+    datePublished: p.data.date.toISOString().slice(0, 10),
+    url: new URL(`/blog/${p.id}/`, Astro.site).href,
+  })),
+};
+---
+
+<BaseLayout
+  title={`Dental Health Blog | ${PRACTICE}`}
+  description="Oral health insights, treatment explainers, and practice news from Proud To Smile Dentistry in Bernardsville, NJ."
+>
+  <Header currentPath="/blog/" />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Blog' }]} />
+
+    <PageHero
+      title="Oral Health Insights"
+      intro="Practical guidance on your teeth, your treatment options, and what's happening at the practice — written by our team."
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="posts-heading">
+      <div class="container-page">
+        <h2 id="posts-heading" class="sr-only">All articles</h2>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            posts.map((post) => (
+              <PostCard
+                href={`/blog/${post.id}/`}
+                title={post.data.title}
+                date={post.data.date}
+                excerpt={post.data.excerpt}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+  <StructuredData type="Blog" data={blogSchema} />
+</BaseLayout>

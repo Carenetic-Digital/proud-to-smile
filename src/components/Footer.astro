@@ -22,6 +22,8 @@ const hours = [
 const quickLinks = [
   { label: 'Schedule Appointment', href: ZOCDOC_URL, external: true },
   { label: 'Doctors', href: '/doctors/' },
+  { label: 'Smile Gallery', href: '/smile-gallery/' },
+  { label: 'Offers & Promotions', href: '/offers-promotions/' },
   { label: 'Blog', href: '/blog/' },
   { label: 'News & Press', href: '/about/news/' },
   { label: 'Resources', href: '/resources/' },
@@ -35,6 +37,7 @@ const patientCenterLinks = [
   { label: 'Insurance', href: '/patient-center/insurance/' },
   { label: 'Pricing', href: '/patient-center/pricing/' },
   { label: 'Financial Options', href: '/patient-center/financial-options/' },
+  { label: 'Bill Pay', href: '/bill-pay/' },
   { label: 'FAQs', href: '/patient-center/faqs/' },
 ];
 
@@ -66,10 +69,11 @@ const currentYear = new Date().getUTCFullYear();
           alt=""
           width="416"
           height="160"
+          loading="lazy"
           class="mb-4 h-10 w-auto brightness-0 invert"
         />
         <address class="not-italic text-sm leading-relaxed text-white/80">
-          {ADDRESS}<br />
+          <a href="/locations/bernardsville/" class="hover:text-white hover:underline">{ADDRESS}</a><br />
           <a href={PHONE_HREF} class="font-medium text-white hover:underline">{PHONE}</a>
         </address>
         <h3 class="mt-6 text-sm font-semibold uppercase tracking-wide text-white/75">Hours</h3>

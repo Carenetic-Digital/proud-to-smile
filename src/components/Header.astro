@@ -1,7 +1,18 @@
 ---
 // component-builder: Header
-// Purpose: Sticky primary navigation with Services mega-menu, About and
-// Patient Center dropdowns, and phone/booking CTAs.
+// Purpose: Sticky primary navigation with an About dropdown, a Services
+// mega-menu, a Patient Center dropdown, and phone/booking CTAs.
+//
+// Three dropdowns only. Providers sit under About as a single "Doctors" entry
+// (the individual provider pages are reached from /doctors/, not listed in the
+// header); Testimonials sits under About; Blog sits under Patient Center.
+//
+// Nav coverage is reconciled against .site-factory/state.json -> pages.planned:
+// every planned page is reachable from the header or the footer, except blog
+// posts (reached via /blog/) and /appointment-thank-you/ (a form confirmation
+// page, deliberately unlinked). New pages go into an existing dropdown rather
+// than becoming another top-level entry — the row only fits the phone +
+// booking CTA cluster at xl.
 
 interface Props {
   currentPath?: string;
@@ -31,8 +42,14 @@ const services = [
   { label: 'Sleep Apnea Treatment', href: '/service/sleep-apnea/' },
 ];
 
+// Providers are one "Doctors" entry here rather than a per-provider list, so
+// adding the associate dentist due in August 2026 (see state.json →
+// pages.notes.third_provider) is a /doctors/ change, not a nav change.
 const aboutLinks = [
   { label: 'About Us', href: '/about/' },
+  { label: 'Our Team', href: '/about/our-team/' },
+  { label: 'Doctors', href: '/doctors/' },
+  { label: 'Testimonials', href: '/testimonials/' },
   { label: 'Careers', href: '/about/careers/' },
   { label: 'News & Press', href: '/about/news/' },
 ];
@@ -43,7 +60,11 @@ const patientCenterLinks = [
   { label: 'Insurance', href: '/patient-center/insurance/' },
   { label: 'Pricing', href: '/patient-center/pricing/' },
   { label: 'Financial Options', href: '/patient-center/financial-options/' },
+  { label: 'Offers & Promotions', href: '/offers-promotions/' },
+  { label: 'Bill Pay', href: '/bill-pay/' },
+  { label: 'Resources', href: '/resources/' },
   { label: 'FAQs', href: '/patient-center/faqs/' },
+  { label: 'Blog', href: '/blog/' },
 ];
 
 const isActive = (href: string) => currentPath === href;
@@ -64,7 +85,7 @@ const isActive = (href: string) => currentPath === href;
         alt=""
         width="416"
         height="160"
-        class="h-10 w-auto sm:h-11"
+        class="h-11 w-auto sm:h-13"
       />
     </a>
 
@@ -78,62 +99,57 @@ const isActive = (href: string) => currentPath === href;
             aria-current={isActive('/') ? 'page' : undefined}>Home</a
           >
         </li>
-        <li class="relative">
-          <details class="group">
-            <summary class="nav-link cursor-pointer select-none list-none">
-              About
-              <svg class="ml-1 inline h-3 w-3 transition-transform group-open:rotate-180" viewBox="0 0 12 8" fill="none" aria-hidden="true">
-                <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-              </svg>
-            </summary>
-            <ul class="dropdown-panel">
+        <li class="nav-item">
+          <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="nav-about">
+            About
+            <svg class="nav-chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <div class="dropdown-shell">
+            <ul id="nav-about" class="dropdown-panel">
               {aboutLinks.map((link) => (
                 <li><a href={link.href} class="dropdown-link">{link.label}</a></li>
               ))}
             </ul>
-          </details>
+          </div>
         </li>
-        <li class="relative">
-          <details class="group">
-            <summary class="nav-link cursor-pointer select-none list-none">
-              Services
-              <svg class="ml-1 inline h-3 w-3 transition-transform group-open:rotate-180" viewBox="0 0 12 8" fill="none" aria-hidden="true">
-                <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-              </svg>
-            </summary>
-            <ul class="dropdown-panel dropdown-panel-wide grid-cols-2">
+        <li class="nav-item">
+          <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="nav-services">
+            Services
+            <svg class="nav-chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <div class="dropdown-shell">
+            <ul id="nav-services" class="dropdown-panel dropdown-panel-wide">
               {services.map((service) => (
                 <li><a href={service.href} class="dropdown-link">{service.label}</a></li>
               ))}
-              <li class="col-span-2 mt-1 border-t border-border pt-2">
-                <a href="/services/" class="dropdown-link font-semibold text-primary-700">View All Services</a>
+              <li class="col-span-2 mt-1 grid grid-cols-2 border-t border-border pt-2">
+                <a href="/services/" class="dropdown-link dropdown-link-strong">View All Services</a>
+                <a href="/smile-gallery/" class="dropdown-link dropdown-link-strong">Smile Gallery</a>
               </li>
             </ul>
-          </details>
+          </div>
         </li>
-        <li>
-          <a href="/doctors/" class:list={['nav-link', isActive('/doctors/') && 'nav-link-active']}>Doctors</a>
-        </li>
-        <li class="relative">
-          <details class="group">
-            <summary class="nav-link cursor-pointer select-none list-none">
-              Patient Center
-              <svg class="ml-1 inline h-3 w-3 transition-transform group-open:rotate-180" viewBox="0 0 12 8" fill="none" aria-hidden="true">
-                <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-              </svg>
-            </summary>
-            <ul class="dropdown-panel">
+        <li class="nav-item">
+          <button type="button" class="nav-link nav-trigger" aria-expanded="false" aria-controls="nav-patient-center">
+            Patient Center
+            <svg class="nav-chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </button>
+          <div class="dropdown-shell">
+            <ul id="nav-patient-center" class="dropdown-panel">
               {patientCenterLinks.map((link) => (
                 <li><a href={link.href} class="dropdown-link">{link.label}</a></li>
               ))}
+              <li class="mt-1 border-t border-border pt-2">
+                <a href="/patient-center/" class="dropdown-link dropdown-link-strong">Patient Center Overview</a>
+              </li>
             </ul>
-          </details>
-        </li>
-        <li>
-          <a href="/blog/" class="nav-link">Blog</a>
-        </li>
-        <li>
-          <a href="/testimonials/" class="nav-link">Testimonials</a>
+          </div>
         </li>
       </ul>
     </nav>
@@ -185,11 +201,11 @@ const isActive = (href: string) => currentPath === href;
               {services.map((service) => (
                 <li><a href={service.href} class="mobile-sublink">{service.label}</a></li>
               ))}
-              <li><a href="/services/" class="mobile-sublink font-semibold text-primary-700">View All Services</a></li>
+              <li><a href="/services/" class="mobile-sublink mobile-sublink-strong">View All Services</a></li>
+              <li><a href="/smile-gallery/" class="mobile-sublink mobile-sublink-strong">Smile Gallery</a></li>
             </ul>
           </details>
         </li>
-        <li><a href="/doctors/" class="mobile-link">Doctors</a></li>
         <li>
           <details>
             <summary class="mobile-link cursor-pointer select-none list-none">Patient Center</summary>
@@ -197,11 +213,10 @@ const isActive = (href: string) => currentPath === href;
               {patientCenterLinks.map((link) => (
                 <li><a href={link.href} class="mobile-sublink">{link.label}</a></li>
               ))}
+              <li><a href="/patient-center/" class="mobile-sublink mobile-sublink-strong">Patient Center Overview</a></li>
             </ul>
           </details>
         </li>
-        <li><a href="/blog/" class="mobile-link">Blog</a></li>
-        <li><a href="/testimonials/" class="mobile-link">Testimonials</a></li>
       </ul>
       <div class="mt-4 flex flex-col gap-3">
         <a href={PHONE_HREF} class="btn btn-outline justify-center">{PHONE}</a>
@@ -222,8 +237,39 @@ const isActive = (href: string) => currentPath === href;
   .nav-link-active {
     @apply font-semibold text-primary-700 underline decoration-2 underline-offset-4;
   }
+  /* --- Desktop dropdowns -------------------------------------------------
+     Opening is done in CSS, not JS: :hover covers pointers and :focus-within
+     covers keyboards, so the menus work even if the script never runs.
+     The shell is a transparent hoverable pad between the trigger and the card
+     — without it the old 4px margin was a dead zone that closed the menu as
+     the pointer travelled into it. */
+  .nav-item {
+    @apply relative;
+  }
+  .nav-trigger {
+    @apply cursor-pointer select-none bg-transparent;
+  }
+  .nav-chevron {
+    @apply ml-1 inline h-3 w-3 transition-transform;
+  }
+  .dropdown-shell {
+    @apply absolute left-0 top-full z-10 hidden pt-1.5;
+  }
+  .nav-item:hover > .dropdown-shell,
+  .nav-item:focus-within > .dropdown-shell {
+    @apply block;
+  }
+  .nav-item:hover .nav-chevron,
+  .nav-item:focus-within .nav-chevron {
+    @apply rotate-180;
+  }
+  /* Escape sets this so a menu can be dismissed while the pointer or focus is
+     still inside it; mouseleave / focusout clear it again. */
+  .nav-item[data-dismissed] > .dropdown-shell {
+    display: none;
+  }
   .dropdown-panel {
-    @apply absolute left-0 top-full z-10 mt-1 grid w-64 gap-0.5 rounded-lg border border-border bg-white p-2 shadow-lg;
+    @apply grid w-64 gap-0.5 rounded-lg border border-border bg-white p-2 shadow-lg;
   }
   .dropdown-panel-wide {
     @apply w-[36rem] grid-cols-2;
@@ -231,11 +277,19 @@ const isActive = (href: string) => currentPath === href;
   .dropdown-link {
     @apply block rounded-md px-3 py-2 text-sm text-neutral-700 hover:bg-neutral-100 hover:text-primary-700;
   }
+  /* Section-hub links that close a dropdown ("View All Services", "Patient
+     Center Overview"). */
+  .dropdown-link-strong {
+    @apply font-semibold text-primary-700;
+  }
   .mobile-link {
     @apply block rounded-md px-2 py-2.5;
   }
   .mobile-sublink {
     @apply block rounded-md px-2 py-2 text-sm text-neutral-600;
+  }
+  .mobile-sublink-strong {
+    @apply font-semibold text-primary-700;
   }
   details > summary::-webkit-details-marker {
     display: none;
@@ -252,20 +306,51 @@ const isActive = (href: string) => currentPath === href;
     toggle.setAttribute('aria-label', isHidden ? 'Open menu' : 'Close menu');
   });
 
-  // Close any open desktop dropdown when clicking outside it.
+  // CSS owns whether a desktop dropdown is visible (see :hover /
+  // :focus-within above). JS only mirrors that state onto aria-expanded and
+  // adds Escape-to-dismiss, so losing the script costs the ARIA state and
+  // Escape — never the menu itself.
+  document.querySelectorAll('.nav-item').forEach((item) => {
+    const trigger = item.querySelector('.nav-trigger');
+    if (!trigger) return;
+
+    const setExpanded = (open) => trigger.setAttribute('aria-expanded', String(open));
+    const release = () => {
+      item.removeAttribute('data-dismissed');
+      setExpanded(false);
+    };
+
+    item.addEventListener('mouseenter', () => setExpanded(true));
+    item.addEventListener('mouseleave', release);
+    item.addEventListener('focusin', () => setExpanded(true));
+    item.addEventListener('focusout', (event) => {
+      const next = (event as FocusEvent).relatedTarget as Node | null;
+      if (!next || !item.contains(next)) release();
+    });
+
+    item.addEventListener('keydown', (event) => {
+      if ((event as KeyboardEvent).key !== 'Escape') return;
+      item.setAttribute('data-dismissed', '');
+      setExpanded(false);
+      (trigger as HTMLButtonElement).focus();
+    });
+  });
+
+  // Collapse an open mobile disclosure when tapping outside it. Only the
+  // mobile panel uses <details> now; the desktop dropdowns are CSS-driven.
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement;
-    document.querySelectorAll('header details[open]').forEach((details) => {
+    document.querySelectorAll('#mobile-menu details[open]').forEach((details) => {
       if (!details.contains(target)) {
         details.removeAttribute('open');
       }
     });
   });
 
-  // Close open dropdowns and the mobile menu on Escape.
+  // Escape closes the mobile disclosures and the mobile menu itself.
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      document.querySelectorAll('header details[open]').forEach((details) => {
+      document.querySelectorAll('#mobile-menu details[open]').forEach((details) => {
         details.removeAttribute('open');
       });
       if (!menu?.classList.contains('hidden')) {

@@ -1,0 +1,155 @@
+---
+// Blog post template — single-column article, per the design reference's
+// post layout (reference/screenshots/blog-index.png shows the index; posts
+// use the standard single-column article template described in
+// reference/analysis.md → Layout Types).
+//
+// Body copy is the verbatim text the real proudtosmile.com published; see
+// src/content/blog/. Posts flagged `draft: true` are the 20 most recent, for
+// which the crawl captured title/date/slug but no body — they build (so old
+// /post/<slug> links resolve) but are noindexed and show an honest notice
+// instead of invented copy.
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import Prose from '../../components/Prose.astro';
+import PostCard from '../../components/PostCard.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { PRACTICE, PHONE } from '../../data/site';
+import { OG_IMAGE, practiceId, websiteId } from '../../data/schema';
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection('blog');
+  const published = posts
+    .filter((p) => !p.data.draft)
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  return posts.map((post) => {
+    // "More reading" = the three nearest published posts, excluding this one.
+    const others = published.filter((p) => p.id !== post.id).slice(0, 3);
+    return { params: { slug: post.id }, props: { post, others } };
+  });
+}) satisfies GetStaticPaths;
+
+const { post, others } = Astro.props;
+const { Content } = await render(post);
+
+const dateLabel = post.data.date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+
+// Real post titles run long; appending the practice name would push most of
+// them past the ~60 characters a SERP shows. Only add the suffix where it fits.
+const seoTitle =
+  post.data.title.length > 45 ? post.data.title : `${post.data.title} | ${PRACTICE}`;
+
+const postURL = new URL(`/blog/${post.id}/`, Astro.site).href;
+
+const articleSchema = {
+  headline: post.data.title,
+  datePublished: post.data.date.toISOString().slice(0, 10),
+  // No `updated` in frontmatter means the post is unchanged since publication,
+  // so the publish date is the honest dateModified.
+  dateModified: (post.data.updated ?? post.data.date).toISOString().slice(0, 10),
+  description: post.data.excerpt,
+  url: postURL,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': postURL },
+  image: new URL(OG_IMAGE, Astro.site).href,
+  author: { '@type': 'Organization', name: PRACTICE },
+  publisher: { '@id': practiceId(Astro.site) },
+  isPartOf: { '@id': websiteId(Astro.site) },
+};
+---
+
+<BaseLayout
+  title={seoTitle}
+  description={post.data.excerpt || `${post.data.title} — from the ${PRACTICE} blog.`}
+  noindex={post.data.draft}
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Blog', href: '/blog/' }, { label: post.data.title }]} />
+
+    <article>
+      <header class="bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+        <div class="container-page">
+          <div class="max-w-3xl py-12 lg:py-20">
+            <time
+              datetime={post.data.date.toISOString().slice(0, 10)}
+              class="text-sm font-semibold uppercase tracking-wide text-primary-700">{dateLabel}</time
+            >
+            <h1 class="mt-3 text-neutral-900">{post.data.title}</h1>
+            {/* No standfirst here: the excerpt is derived from the post's own
+                opening paragraph, so printing it above the body would just
+                repeat it. It still does its job in the meta description and
+                on index cards. */}
+          </div>
+        </div>
+      </header>
+
+      <div class="container-page py-[var(--spacing-section)]">
+        <div class="max-w-3xl">
+          {
+            post.data.draft ? (
+              <div class="card border-l-4 border-l-primary-600">
+                <h2 class="text-xl">This article is being migrated</h2>
+                <p class="mt-3 text-neutral-700">
+                  We're moving this post over from our previous site and the full text isn't here
+                  yet. In the meantime, browse the rest of our articles or call us at {PHONE} with
+                  any question about your care.
+                </p>
+                <a href="/blog/" class="link-arrow mt-6">
+                  Browse All Articles
+                  <ArrowCircle />
+                </a>
+              </div>
+            ) : (
+              <Prose>
+                <Content />
+              </Prose>
+            )
+          }
+        </div>
+      </div>
+    </article>
+
+    {
+      others.length > 0 && (
+        <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="more-heading">
+          <div class="container-page">
+            <h2 id="more-heading">More Reading</h2>
+            <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {others.map((other) => (
+                <PostCard
+                  href={`/blog/${other.id}/`}
+                  title={other.data.title}
+                  date={other.data.date}
+                  excerpt={other.data.excerpt}
+                />
+              ))}
+            </div>
+            <a href="/blog/" class="link-arrow mt-10">
+              View All Articles
+              <ArrowCircle />
+            </a>
+          </div>
+        </section>
+      )
+    }
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+
+  {!post.data.draft && <StructuredData type="BlogPosting" data={articleSchema} />}
+</BaseLayout>

@@ -1,0 +1,116 @@
+---
+// New Patients — clones the reference's new-patients template
+// (reference/screenshots/patient-resources-new-patients.png).
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import FeatureCards from '../../components/FeatureCards.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import { PATIENT_FORMS_URL, PHONE, ADDRESS } from '../../data/site';
+
+const costCards = [
+  { title: 'Pricing', text: 'How we estimate treatment cost and what we tell you up front.', href: '/patient-center/pricing/', label: 'Learn More' },
+  { title: 'Accepted Insurance', text: 'We work with all major insurance providers to maximise your benefits.', href: '/patient-center/insurance/', label: 'Am I Covered?' },
+  { title: 'Financial Options', text: 'Flexible ways to spread the cost of larger treatment plans.', href: '/patient-center/financial-options/', label: 'See Options' },
+];
+---
+
+<BaseLayout
+  title="New Patients in Bernardsville, NJ | Proud To Smile"
+  description="What to expect at your first visit to Proud To Smile Dentistry in Bernardsville, NJ — what to bring and how to complete your forms in advance."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Patient Center', href: '/patient-center/' }, { label: 'New Patients' }]} />
+
+    <PageHero
+      title="Welcome to Our Family at Proud To Smile Dentistry"
+      intro="We're thrilled to welcome you. Our team provides exceptional dental care in a warm environment, and we can't wait to help you achieve and maintain optimal oral health."
+      image="/images/proudtosmile/smiling-patient-with-provider.webp"
+      imageAlt="A new patient being welcomed at Proud To Smile Dentistry"
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="expect-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="expect-heading">What to Expect From Your Visits</h2>
+          <p class="mt-6 text-neutral-700">
+            You&rsquo;ll receive personalized attention and a comprehensive approach to your dental
+            care. We take the time to understand your needs and concerns, and develop a treatment
+            plan that fits your goals rather than a template.
+          </p>
+
+          <h3 class="mt-10 text-xl">Comfort Is Part of the Treatment</h3>
+          <p class="mt-4 text-neutral-700">
+            Hand warmers, scented pillows, and entertainment like headphones and television help
+            make dental visits pleasant. If the dentist has never been your favourite place to be,
+            say so when you book — we will work around it.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="first-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="first-heading">Your First Visit</h2>
+          <p class="mt-6 text-neutral-700">
+            Your first appointment starts with a comprehensive exam so we understand where your oral
+            health stands before we recommend anything.
+          </p>
+
+          <h3 class="mt-10 text-xl">What to Bring to Get Started</h3>
+          <ul class="mt-4 space-y-3">
+            {
+              [
+                'Your dental insurance card',
+                'A list of any medications and supplements you take',
+                'Recent X-ray results, if you have them',
+                'Any questions or concerns you want to raise',
+                'Documentation of any symptoms',
+                'Your previous dentist’s information, if applicable',
+              ].map((item) => (
+                <li class="flex gap-3 text-neutral-700">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <p class="mt-8 text-neutral-700">
+            Complete your intake paperwork online before you arrive and you&rsquo;ll spend your
+            visit in the chair instead of the waiting room. We&rsquo;re at {ADDRESS} — call {PHONE}
+            if you have any question at all before your appointment.
+          </p>
+
+          <a href={PATIENT_FORMS_URL} target="_blank" rel="noopener" class="btn btn-primary mt-8">
+            Fill Out My Patient Forms
+            <ArrowCircle />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="costs-heading">
+      <div class="container-page">
+        <h2 id="costs-heading">Explore Costs &amp; Affordability</h2>
+        <p class="mt-6 max-w-3xl text-neutral-700">
+          Making quality dental care accessible matters to us. Here&rsquo;s how cost, insurance, and
+          payment work at the practice.
+        </p>
+        <div class="mt-12">
+          <FeatureCards cards={costCards} columns={3} />
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

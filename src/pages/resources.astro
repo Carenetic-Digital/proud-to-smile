@@ -1,0 +1,85 @@
+---
+// Resources — the video/resource library the client asked for on the intake
+// call (state.json -> pages.notes.video_resources). The videos themselves are
+// still to be supplied by the client, so this page ships the shell and links
+// to the explainer content we do have rather than inventing a video library.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import CtaSection from '../components/CtaSection.astro';
+import FeatureCards from '../components/FeatureCards.astro';
+import ArrowCircle from '../components/ArrowCircle.astro';
+import { SOCIAL } from '../data/site';
+
+const guides = [
+  { title: 'Veneers Explained', text: 'What veneers are, what they fix, and how long they last.', href: '/service/veneers/', label: 'Read the Guide' },
+  { title: 'Clear Aligner Therapy', text: 'How aligners work, what they treat, and the 12–18 month timeline.', href: '/service/invisalign/', label: 'Read the Guide' },
+  { title: 'Dental Implants', text: 'The titanium post, the healing period, and who makes a good candidate.', href: '/service/dental-implants/', label: 'Read the Guide' },
+  { title: 'Sleep Apnea & Your Airway', text: 'Why a dentist treats snoring, and what airway-focused care involves.', href: '/service/sleep-apnea/', label: 'Read the Guide' },
+  { title: 'Gum Disease', text: 'The symptoms to watch for and the treatments that reverse it.', href: '/service/periodontal-therapy/', label: 'Read the Guide' },
+  { title: 'Professional Cleanings', text: 'What actually happens in the chair, and why twice a year.', href: '/service/cleaning/', label: 'Read the Guide' },
+];
+---
+
+<BaseLayout
+  title="Patient Resources | Proud To Smile Dentistry"
+  description="Guides and explainers on dental treatment from Proud To Smile Dentistry in Bernardsville, NJ."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Resources' }]} />
+
+    <PageHero
+      title="Patient Resources"
+      intro="Straightforward explanations of the treatments we offer — so you can walk into your appointment already knowing the basics."
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="guides-heading">
+      <div class="container-page">
+        <h2 id="guides-heading">Treatment Guides</h2>
+        <div class="mt-12">
+          <FeatureCards cards={guides} columns={3} />
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="video-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="video-heading">Video Library</h2>
+          <p class="mt-6 text-neutral-700">
+            Dr. Patti records short videos explaining treatments in plain language. We&rsquo;re
+            collecting them here — in the meantime, you can find them on our YouTube channel.
+          </p>
+          <a href={SOCIAL.youtube} target="_blank" rel="noopener" class="btn btn-primary mt-8">
+            Watch on YouTube
+            <ArrowCircle />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="blog-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="blog-heading">From the Blog</h2>
+          <p class="mt-6 text-neutral-700">
+            Dozens of articles on oral health, treatment options, and looking after your smile
+            between visits.
+          </p>
+          <a href="/blog/" class="link-arrow mt-8">
+            Read the Blog
+            <ArrowCircle />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

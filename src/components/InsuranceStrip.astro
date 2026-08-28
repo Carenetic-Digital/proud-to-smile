@@ -1,0 +1,29 @@
+---
+// component-builder: InsuranceStrip
+// Purpose: Thin full-width dark band that sits directly under the hero,
+// promoting insurance acceptance. Reusable on any page that needs the same
+// interruption band between two light sections.
+import ArrowCircle from './ArrowCircle.astro';
+
+interface Props {
+  text?: string;
+  href?: string;
+  label?: string;
+}
+
+const {
+  text = 'We accept all major insurance providers.',
+  href = '/patient-center/insurance/',
+  label = 'Am I Covered?',
+} = Astro.props;
+---
+
+<section class="bg-primary-700 py-6" aria-labelledby="insurance-heading">
+  <div class="container-page flex flex-col items-center justify-center gap-4 text-center sm:flex-row">
+    <p id="insurance-heading" class="text-white">{text}</p>
+    <a href={href} class="btn btn-on-dark shrink-0">
+      {label}
+      <ArrowCircle />
+    </a>
+  </div>
+</section>

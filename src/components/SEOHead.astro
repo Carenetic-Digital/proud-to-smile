@@ -25,7 +25,7 @@ interface Props {
 const {
   title,
   description,
-  image = '/images/og-default.jpg',
+  image = '/images/proudtosmile/hero-woman-at-dentist.webp',
   type = 'website',
   noindex = false,
 } = Astro.props;
@@ -34,7 +34,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const imageURL = new URL(image, Astro.site);
 
 // Get site name from config or default
-const siteName = Astro.site?.hostname || 'Site Factory';
+const siteName = 'Proud To Smile Dentistry';
 ---
 
 <!-- Primary Meta Tags -->

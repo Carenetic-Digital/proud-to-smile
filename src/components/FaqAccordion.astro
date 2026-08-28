@@ -1,0 +1,40 @@
+---
+// component-builder: FaqAccordion
+// Purpose: The reference's FAQ list (reference/screenshots/service-dental-implants.png).
+// Native <details>/<summary> so it is keyboard- and screen-reader-accessible
+// with no JS and no ARIA state to keep in sync.
+
+interface Props {
+  faqs: { q: string; a: string }[];
+}
+
+const { faqs } = Astro.props;
+---
+
+<ul class="divide-y divide-border border-y border-border">
+  {
+    faqs.map((faq) => (
+      <li>
+        <details class="group">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-semibold text-neutral-900 hover:text-primary-700">
+            {faq.q}
+            <span
+              class="relative h-4 w-4 shrink-0 text-primary-700"
+              aria-hidden="true"
+            >
+              <span class="absolute left-0 top-1/2 h-0.5 w-4 -translate-y-1/2 bg-current" />
+              <span class="absolute left-1/2 top-0 h-4 w-0.5 -translate-x-1/2 bg-current transition-transform group-open:scale-y-0" />
+            </span>
+          </summary>
+          <p class="pb-5 text-neutral-700">{faq.a}</p>
+        </details>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

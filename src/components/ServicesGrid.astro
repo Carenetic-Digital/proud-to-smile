@@ -1,98 +1,126 @@
 ---
 // component-builder: ServicesGrid
-// Purpose: Reusable service-card grid — shared across the homepage and
-// (later) location/doctor pages, per reference/analysis.md.
-// Content condensed from reference/content-proudtosmile.md section 4.
+// Purpose: The site's service grid — two columns, each block listing its
+// sub-treatments over a divider rule and closing with a full-width bar
+// button. This is the client-approved Concept C (v3) treatment and the
+// standard for every page that lists services (homepage, /services/, doctor
+// and location pages), per reference/analysis.md.
+//
+// Sub-treatments condensed from reference/content-proudtosmile.md section 4 —
+// the practice's 14 real services. "Clear Aligner Therapy" is the on-page
+// name; the slug stays `invisalign` for SEO continuity.
+import ArrowCircle from './ArrowCircle.astro';
 
 interface Service {
   title: string;
   slug: string;
-  bullets: string[];
+  items: string[];
 }
 
-const services: Service[] = [
+interface Props {
+  /** Restrict the grid to these slugs (in the order given). Omit for all 14. */
+  only?: string[];
+}
+
+const { only } = Astro.props;
+
+const allServices: Service[] = [
   {
     title: 'Cleanings',
     slug: 'cleaning',
-    bullets: ['Comprehensive exams & cleanings', 'Plaque & tartar removal', 'Preventive care education'],
+    items: ['Comprehensive Exams', 'Plaque & Tartar Removal', 'Polishing & Flossing', 'Preventive Care Education'],
   },
   {
     title: 'Veneers',
     slug: 'veneers',
-    bullets: ['Porcelain veneers', 'Trial smile preview', 'Smile makeover planning'],
+    items: ['Porcelain Veneers', 'Trial Smile Preview', 'Chip & Gap Correction', 'Smile Makeover Planning'],
   },
   {
     title: 'Teeth Whitening',
     slug: 'teeth-whitening',
-    bullets: ['Opalescence BOOST in-office whitening', 'Results last up to 3 years', 'Custom treatment plans'],
+    items: ['Opalescence BOOST In-Office', 'Stain & Discoloration Removal', 'Whitening Maintenance'],
   },
   {
     title: 'Emergency Dentistry',
     slug: 'emergency-dentistry',
-    bullets: ['Same-day emergency appointments', 'Toothache & injury care', 'Broken or knocked-out tooth treatment'],
+    items: [
+      'Same-Day Appointments',
+      'Knocked-Out Tooth',
+      'Cracked or Chipped Teeth',
+      'Loose or Lost Restorations',
+      'Severe Tooth Pain',
+      'Gum Swelling & Abscess',
+    ],
   },
   {
     title: 'Crowns',
     slug: 'crowns',
-    bullets: ['Porcelain & porcelain-fused-to-metal crowns', 'Root canal restorations', 'Implant crowns'],
+    items: ['All-Porcelain Crowns', 'Porcelain-Fused-to-Metal', 'Root Canal Restorations', 'Implant Crowns'],
   },
   {
     title: 'Clear Aligner Therapy',
     slug: 'invisalign',
-    bullets: ['Clear aligners for teens & adults', 'Corrects crowding, gaps & bite issues', '12–18 month average treatment'],
+    items: ['Aligners for Adults', 'Aligners for Teens', 'Crowding & Gaps', 'Bite Correction'],
   },
   {
     title: 'Dental Implants',
     slug: 'dental-implants',
-    bullets: ['Single & multi-tooth implants', 'Natural look and feel', 'Built to last a lifetime'],
+    items: ['Single-Tooth Implants', 'Implant-Supported Bridges', 'Implant-Supported Dentures', 'Surgical Placement'],
   },
   {
     title: 'Botox',
     slug: 'botox',
-    bullets: ['Relieves teeth grinding & jaw tension', 'Softens gummy smiles', 'Eases tension headaches'],
+    items: ['Teeth Grinding & Clenching', 'Gummy Smile Treatment', 'Jaw Muscle Tension', 'Tension Headaches'],
   },
   {
     title: 'Dentures',
     slug: 'dentures',
-    bullets: ['Conventional, immediate & implant-supported', 'Custom fit & natural appearance'],
+    items: ['Conventional Dentures', 'Immediate Dentures', 'Implant-Supported Dentures', 'Denture Care & Maintenance'],
   },
   {
     title: 'Periodontal Therapy',
     slug: 'periodontal-therapy',
-    bullets: ['Scaling & root planing', 'Gum disease & gingivitis treatment', 'Antibiotic therapy'],
+    items: ['Scaling & Root Planing', 'Laser Gum Therapy', 'Antibiotic Therapy', 'Flap Surgery & Grafts'],
   },
   {
     title: 'Cosmetic & Restorative Dentistry',
     slug: 'cosmetic-and-restorative-dentistry',
-    bullets: ['Gum recontouring', 'Dental bonding & tooth-colored fillings', 'Porcelain inlays & onlays'],
+    items: ['Gum Recontouring', 'Dental Bonding', 'Tooth-Colored Fillings', 'Porcelain Inlays & Onlays'],
   },
   {
     title: 'Extractions & Oral Surgery',
     slug: 'extractions-oral-surgery',
-    bullets: ['Tooth extractions & wisdom teeth', 'Implant placement surgery', 'Fast, comfortable recovery'],
+    items: ['Tooth Extractions', 'Wisdom Teeth Removal', 'Implant Placement Surgery', 'Periodontal Surgery', 'Biopsy Procedures'],
   },
   {
     title: 'Pediatric Dentistry',
     slug: 'pediatric-dentistry',
-    bullets: ['Kid-friendly cleanings & exams', 'Sealants & fluoride treatments', 'Digital X-rays for kids'],
+    items: ["Children's Cleanings & Exams", 'Dental Sealants', 'Fluoride Treatments', 'Digital X-Rays for Kids', "Kids' Restorations"],
   },
   {
     title: 'Sleep Apnea Treatment',
     slug: 'sleep-apnea',
-    bullets: ['Airway-focused diagnostics', 'Custom oral appliance therapy', 'Relief from snoring & fatigue'],
+    items: ['Airway-Focused Diagnostics', 'Oral Appliance Therapy', 'Snoring Solutions', 'TMJ & Airway Care'],
   },
 ];
+
+const services = only
+  ? only.map((slug) => allServices.find((s) => s.slug === slug)).filter((s): s is Service => Boolean(s))
+  : allServices;
 ---
 
-<div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+<div class="grid grid-cols-1 gap-x-8 gap-y-12 lg:grid-cols-2">
   {services.map((service) => (
-    <div class="card flex flex-col">
-      <h3 class="flex-1">{service.title}</h3>
-      <a
-        href={`/service/${service.slug}/`}
-        class="btn btn-outline mt-4 w-full justify-center text-sm"
-      >
+    <div class="flex flex-col">
+      <h3>{service.title}</h3>
+      <ul class="mt-4 grid flex-1 grid-cols-1 gap-x-8 gap-y-2 text-sm text-neutral-700 sm:grid-cols-2">
+        {service.items.map((item) => (
+          <li class="border-b border-border py-2">{item}</li>
+        ))}
+      </ul>
+      <a href={`/service/${service.slug}/`} class="btn-bar mt-6">
         Learn More About {service.title}
+        <ArrowCircle />
       </a>
     </div>
   ))}

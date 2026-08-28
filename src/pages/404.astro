@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import ArrowCircle from '../components/ArrowCircle.astro';
 ---
 
 <BaseLayout title="Page Not Found | Proud To Smile Dentistry" noindex={true}>
@@ -14,7 +15,10 @@ import Footer from '../components/Footer.astro';
         The page you're looking for may have moved or no longer exists. Let's get you back to your
         dental home in Bernardsville.
       </p>
-      <a href="/" class="btn btn-primary mt-8">Return Home</a>
+      <a href="/" class="btn btn-primary mt-8">
+        Return Home
+        <ArrowCircle />
+      </a>
     </div>
   </main>
   <Footer />

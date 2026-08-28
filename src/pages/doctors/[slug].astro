@@ -1,0 +1,246 @@
+---
+// Provider page template.
+//
+// Structure clones the design reference's doctor template
+// (reference/screenshots/provider-dr-robert-brown-dds.png):
+//   name + credentials + bio + headshot → education | associations →
+//   patient testimonial panel → services grid → location → CTA
+//
+// Karima West has no published bio on the real site ("coming soon.."), so the
+// bio block degrades to `bioPending` rather than inventing copy.
+import type { GetStaticPaths } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import ServicesGrid from '../../components/ServicesGrid.astro';
+import LocationCard from '../../components/LocationCard.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { doctors } from '../../data/doctors';
+import { services } from '../../data/services';
+import { PRACTICE, CITY, STATE, PHONE, PHONE_HREF, ZOCDOC_URL, STREET, POSTAL_CODE } from '../../data/site';
+
+export const getStaticPaths = (() =>
+  doctors.map((doctor) => ({ params: { slug: doctor.slug }, props: { doctor } }))) satisfies GetStaticPaths;
+
+const { doctor } = Astro.props;
+const fullName = `${doctor.name}, ${doctor.credentials}`;
+const doctorServices = doctor.services.filter((slug) => services.some((s) => s.slug === slug));
+
+const personSchema = {
+  name: fullName,
+  honorificSuffix: doctor.credentials,
+  jobTitle: doctor.title,
+  description: doctor.bio[0] ?? doctor.title,
+  image: new URL(doctor.image, Astro.site).href,
+  url: new URL(`/doctors/${doctor.slug}/`, Astro.site).href,
+  worksFor: {
+    '@type': 'Dentist',
+    name: PRACTICE,
+    telephone: '+1-908-221-1188',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: STREET,
+      addressLocality: CITY,
+      addressRegion: STATE,
+      postalCode: POSTAL_CODE,
+      addressCountry: 'US',
+    },
+  },
+  ...(doctor.specialties ? { knowsAbout: doctor.specialties } : {}),
+};
+---
+
+<BaseLayout title={doctor.seoTitle} description={doctor.description} image={doctor.image}>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Doctors', href: '/doctors/' }, { label: fullName }]} />
+
+    <!-- Name, bio, headshot -->
+    <section class="bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-10 py-12 lg:grid-cols-[1fr_20rem] lg:gap-16 lg:py-20">
+          <div>
+            <h1 class="text-neutral-900">{fullName}</h1>
+            <p class="mt-3 text-lg font-semibold text-primary-700">{doctor.title}</p>
+
+            {doctor.bio.map((para) => <p class="mt-6 max-w-2xl text-neutral-700">{para}</p>)}
+            {doctor.bioPending && <p class="mt-6 max-w-2xl text-neutral-700">{doctor.bioPending}</p>}
+
+            {
+              doctor.specialties && (
+                <ul class="mt-8 flex flex-wrap gap-2">
+                  {doctor.specialties.map((s) => (
+                    <li class="rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-800">
+                      {s}
+                    </li>
+                  ))}
+                </ul>
+              )
+            }
+
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a href={PHONE_HREF} class="btn btn-primary">
+                Call {PHONE}
+                <ArrowCircle />
+              </a>
+              <a href={ZOCDOC_URL} target="_blank" rel="noopener" class="btn btn-outline">
+                Schedule Appointment
+                <ArrowCircle />
+              </a>
+            </div>
+          </div>
+
+          <div>
+            <img
+              src={doctor.image}
+              alt={doctor.imageAlt}
+              width={doctor.imageWidth}
+              height={doctor.imageHeight}
+              loading="eager"
+              fetchpriority="high"
+              class="panel h-auto w-full max-w-xs object-cover lg:max-w-none"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education | Associations -->
+    {
+      (doctor.education || doctor.affiliations) && (
+        <section class="py-[var(--spacing-section)]" aria-labelledby="credentials-heading">
+          <div class="container-page">
+            <h2 id="credentials-heading" class="sr-only">
+              Education and affiliations
+            </h2>
+            <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
+              {doctor.education && (
+                <div>
+                  <h3>Education</h3>
+                  <ul class="mt-6 space-y-3">
+                    {doctor.education.map((item) => (
+                      <li class="flex gap-3 text-neutral-700">
+                        <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {doctor.affiliations && (
+                <div>
+                  <h3>Positions &amp; Affiliations</h3>
+                  <ul class="mt-6 space-y-3">
+                    {doctor.affiliations.map((item) => (
+                      <li class="flex gap-3 text-neutral-700">
+                        <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Philosophy quotes -->
+    {
+      doctor.philosophy && (
+        <section class="pb-[var(--spacing-section)]" aria-labelledby="philosophy-heading">
+          <div class="container-page">
+            <div class="max-w-3xl">
+              <h2 id="philosophy-heading">In Her Own Words</h2>
+              <ul class="mt-8 space-y-6">
+                {doctor.philosophy.map((quote) => (
+                  <li>
+                    <blockquote class="border-l-4 border-primary-200 pl-6 text-lg italic text-neutral-700">
+                      &ldquo;{quote}&rdquo;
+                    </blockquote>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Patient testimonial -->
+    {
+      doctor.testimonial && (
+        <section class="pb-[var(--spacing-section)]" aria-labelledby="quote-heading">
+          <div class="container-page">
+            <div class="panel bg-primary-800 px-6 py-14 text-center text-white sm:px-12 lg:px-20">
+              <h2 id="quote-heading" class="sr-only">
+                What patients say about {doctor.name}
+              </h2>
+              <svg class="mx-auto h-10 w-14 fill-current text-accent-200" viewBox="0 0 56 40" aria-hidden="true">
+                <path d="M0 40V22.9C0 10.6 6.9 2 18.6 0l2.3 5.4C14.4 7.6 10.6 12 10.3 18.6H21V40H0Zm35 0V22.9C35 10.6 41.9 2 53.6 0l2.3 5.4C49.4 7.6 45.6 12 45.3 18.6H56V40H35Z" />
+              </svg>
+              <blockquote class="mx-auto mt-8 max-w-2xl">
+                <p class="text-lg leading-relaxed">&ldquo;{doctor.testimonial.quote}&rdquo;</p>
+                <footer class="mt-4 text-sm text-white/85">
+                  <cite class="not-italic font-semibold">{doctor.testimonial.author}</cite>
+                  <span aria-hidden="true"> | </span>
+                  {doctor.testimonial.context}
+                </footer>
+              </blockquote>
+              <a href="/testimonials/" class="btn btn-on-dark mt-10">
+                Read All Reviews
+                <ArrowCircle />
+              </a>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Services this provider offers -->
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="services-heading">
+      <div class="container-page">
+        <h2 id="services-heading" class="max-w-2xl">
+          Care {doctor.name} Provides in {CITY}
+        </h2>
+        <p class="mt-6 max-w-3xl text-neutral-700">
+          Explore the treatments {doctor.name} offers at {PRACTICE}.
+        </p>
+        <div class="mt-12">
+          <ServicesGrid only={doctorServices} />
+        </div>
+        <a href="/services/" class="link-arrow mt-10">
+          View All Services
+          <ArrowCircle />
+        </a>
+      </div>
+    </section>
+
+    <!-- Where to find them -->
+    <section class="py-[var(--spacing-section)]" aria-labelledby="location-heading">
+      <div class="container-page">
+        <h2 id="location-heading">Where to Find {doctor.name}</h2>
+        <p class="mt-6 max-w-2xl text-neutral-700">
+          {doctor.name} sees patients at our single {CITY}, {STATE} practice.
+        </p>
+        <div class="mt-12 max-w-md">
+          <LocationCard />
+        </div>
+      </div>
+    </section>
+
+    <CtaSection
+      heading={`Schedule with ${doctor.name}`}
+      text={`Call ${PHONE} or book online to arrange your visit at ${PRACTICE}.`}
+    />
+  </main>
+
+  <Footer />
+
+  <StructuredData type="Person" data={personSchema} />
+</BaseLayout>

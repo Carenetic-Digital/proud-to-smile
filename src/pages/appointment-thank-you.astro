@@ -1,0 +1,50 @@
+---
+// Appointment confirmation page. Deliberately noindex and unlinked from
+// navigation — it exists as a post-booking landing target only.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ArrowCircle from '../components/ArrowCircle.astro';
+import { PHONE, PHONE_HREF, ADDRESS, PATIENT_FORMS_URL } from '../data/site';
+---
+
+<BaseLayout
+  title="Thank You | Proud To Smile Dentistry"
+  description="Your appointment request has been received. The Proud To Smile Dentistry team in Bernardsville, NJ will call to confirm your visit and answer any questions."
+  noindex={true}
+>
+  <Header />
+
+  <main id="main-content" class="bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+    <div class="container-page py-[var(--spacing-section)]">
+      <div class="mx-auto max-w-2xl text-center">
+        <p class="text-sm font-semibold uppercase tracking-wide text-primary-700">Appointment</p>
+        <h1 class="mt-2 text-neutral-900">Thank you — we&rsquo;ve got it</h1>
+        <p class="mt-6 text-lg text-neutral-700">
+          Someone from our team will be in touch to confirm your appointment. If you need us sooner,
+          call <a href={PHONE_HREF} class="font-semibold text-primary-700 hover:underline">{PHONE}</a>.
+        </p>
+
+        <div class="card mt-10 border-t-4 border-t-accent-200 text-left">
+          <h2 class="text-xl">While You Wait</h2>
+          <p class="mt-3 text-neutral-700">
+            Completing your intake forms online now means your visit starts on time. We&rsquo;re at
+            {ADDRESS}.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-4">
+            <a href={PATIENT_FORMS_URL} target="_blank" rel="noopener" class="btn btn-primary">
+              Fill Out My Forms
+              <ArrowCircle />
+            </a>
+            <a href="/patient-center/new-patients/" class="btn btn-outline">
+              What to Expect
+              <ArrowCircle />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>

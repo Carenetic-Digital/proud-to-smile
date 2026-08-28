@@ -1,208 +1,219 @@
 ---
+// Homepage — the client-approved design (formerly Concept C / homepage-v3).
+//
+// Section architecture is a close structural clone of the design reference
+// (pdp.carenetic.digital), reskinned in the Proud To Smile palette and
+// populated only with real content from reference/content-proudtosmile.md:
+//   1. Hero (split: copy left, photo bleeding to band edges right, Google rating)
+//   2. Insurance strip (thin dark full-width band)
+//   3. Full-width office photograph band
+//   4. "What Sets Us Apart" (heading + intro left, 2x2 link blocks right)
+//   5. Testimonials (large dark rounded panel, decorative quote glyph)
+//   6. "Discover Quality Dental Care for Every Smile" (2-col service blocks)
+//   7. "Everything You Need for Better Dental Care" (tinted bg, 4-col cards)
+//   8. Closing CTA (white card floating on a dark gradient band)
+//
+// Deviations from the reference, all per client decisions in
+// .site-factory/state.json → pages.notes:
+//   - Single Bernardsville location, so the reference's "Our Locations" block
+//     becomes "Visit Our Office" and "Find Location" CTAs become the phone.
+//   - Phone is the primary CTA; ZocDoc booking is promoted but secondary.
+//   - "Clear Aligner Therapy", never "Invisalign", in on-page copy.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
+import InsuranceStrip from '../components/InsuranceStrip.astro';
+import TestimonialPanel from '../components/TestimonialPanel.astro';
 import ServicesGrid from '../components/ServicesGrid.astro';
+import CtaSection from '../components/CtaSection.astro';
+import ArrowCircle from '../components/ArrowCircle.astro';
+import { focusFor } from '../data/imageFocus';
 
-const ZOCDOC_URL =
-  'https://www.zocdoc.com/practice/proud-to-smile-dentistry-90291?lock=true&referrerType=widget';
+// "What Sets Us Apart" — the reference's 2x2 block of text links.
+const apartBlocks = [
+  {
+    title: 'Meet Dr. Patti',
+    text: 'Dr. Patricia Swaintek-Lamb, DMD brings over 25 years of dental experience, specializing in cosmetic dentistry and sleep apnea treatment.',
+    href: '/doctors/patricia-swaintek-lamb-dmd/',
+    label: 'Meet Dr. Patti',
+  },
+  {
+    title: 'Meet Our Team',
+    text: 'From your first phone call to your last polish, a close-knit team of hygienists and patient care coordinators looks after every visit.',
+    href: '/doctors/',
+    label: 'Meet Our Team',
+  },
+  {
+    title: 'About Us',
+    text: 'We take a holistic approach to dental treatment, because oral health affects the health of your whole body.',
+    href: '/about/',
+    label: 'Learn More About Us',
+  },
+  {
+    title: 'Visit Our Office',
+    text: 'Find us at 10 Anderson Hill Road in Bernardsville, NJ — with hand warmers, scented pillows, and entertainment to make every visit pleasant.',
+    href: '/locations/bernardsville/',
+    label: 'Get Directions',
+  },
+];
 
+// Verbatim from reference/content-proudtosmile.md section 5 (homepage quotes).
 const testimonials = [
   {
     quote:
-      "I have been going to Dr. Patti for the last 25 years. She is the best. Her practice is very tech savvy unlike other dentists.",
+      'I have been going to Dr. Patti for the last 25 years. She is the best. Her practice is very tech savvy unlike other dentists.',
     author: 'Naresh P.',
+    context: 'Patient of 25 years',
   },
   {
-    quote: 'Dr. Patti and her staff are the best. She is very skillful and knowledgeable.',
-    author: 'Malinee S.',
-  },
-  {
-    quote: "Dr Patti is not only efficient and knowledgeable, but she's also one of the most empathetic, kind, and personable dentists I've ever met.",
+    quote:
+      "Dr. Patti is not only efficient and knowledgeable, but she's also one of the most empathetic, kind, and personable dentists I've ever met.",
     author: 'Jose O.',
+    context: 'February 2025',
+  },
+  {
+    quote:
+      'The competency, efficiency and kindness of Dr. Patti and her team was extraordinary!',
+    author: 'Carol Z.',
+    context: 'April 2023',
+  },
+];
+
+// "Everything You Need for Better Dental Care" — the reference's 4-col cards.
+const resources = [
+  {
+    title: 'New Patients',
+    text: 'Getting started with better dental health is simple. Learn what to expect before your first visit.',
+    href: '/patient-center/new-patients/',
+    label: 'Get More Information',
+  },
+  {
+    title: 'Patient Forms',
+    text: 'Save time by completing your new-patient paperwork online before you arrive.',
+    href: '/patient-center/patient-forms/',
+    label: 'Download Forms',
+  },
+  {
+    title: 'Insurance',
+    text: 'We work with most major insurance providers to help you get the most from your coverage.',
+    href: '/patient-center/insurance/',
+    label: 'Am I Covered?',
+  },
+  {
+    title: 'Pricing',
+    text: 'Quality dental care should be accessible. Explore transparent pricing and flexible payment options.',
+    href: '/patient-center/pricing/',
+    label: 'Learn More About Pricing',
   },
 ];
 ---
 
 <BaseLayout
   title="Dentist in Bernardsville, NJ | Proud To Smile Dentistry"
-  description="Cosmetic, Family, and General Dentistry & Orthodontic Dentistry in Bernardsville, NJ. Call 908-221-1188 or schedule online with Dr. Patricia Swaintek-Lamb, DMD."
+  description="Cosmetic, family, and general dentistry in Bernardsville, NJ. Call 908-221-1188 or book online with Dr. Patricia Swaintek-Lamb, DMD."
 >
   <Header currentPath="/" />
 
   <main id="main-content">
+    <!-- 1. Hero -->
     <Hero />
 
-    <!-- Insurance strip -->
-    <section class="bg-primary-600 py-8 sm:py-9">
-      <div class="mx-auto flex max-w-7xl flex-col items-center justify-center gap-4 px-4 text-center sm:flex-row sm:justify-between sm:px-6 sm:text-left lg:px-8">
-        <p class="text-white">We accept all major insurance providers.</p>
-        <a href="/patient-center/insurance/" class="btn btn-secondary shrink-0">Am I Covered?</a>
+    <!-- 2. Insurance strip -->
+    <InsuranceStrip />
+
+    <!-- 3. Full-width office photograph band -->
+    <section class="pt-[var(--spacing-section-sm)]">
+      <div class="container-page">
+        <img
+          src="/images/proudtosmile/dental-services.webp"
+          alt="Treatment room at Proud To Smile Dentistry in Bernardsville, NJ"
+          width="1420"
+          height="700"
+          loading="lazy"
+          class={`panel h-56 w-full object-cover ${focusFor('dental-services.webp')} sm:h-80 lg:h-[26rem]`}
+        />
       </div>
     </section>
 
-    <!-- What Sets Us Apart -->
+    <!-- 4. What Sets Us Apart -->
     <section class="py-[var(--spacing-section)]" aria-labelledby="apart-heading">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
-          <img
-            src="/images/proudtosmile/office-collage.webp"
-            alt="Collage of the Proud To Smile Dentistry office and team with a patient"
-            width="654"
-            height="599"
-            loading="lazy"
-            class="w-full rounded-lg border border-border object-cover"
-          />
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
           <div>
             <h2 id="apart-heading">What Sets Us Apart</h2>
-            <p class="mt-4 text-lg text-neutral-700">
-              Patients choose Proud To Smile because we're a warm, welcoming place to be — not a
+            <p class="mt-6 text-neutral-700">
+              Patients choose Proud To Smile because we&rsquo;re a warm, welcoming place to be — not a
               run-of-the-mill dental office. We blend modern, state-of-the-art dentistry with a
               close-knit team that genuinely cares.
             </p>
-            <ul class="mt-8 space-y-6">
-              <li>
-                <h3>Meet Our Doctors</h3>
-                <p class="mt-1 text-neutral-700">
-                  Dr. Patricia Swaintek-Lamb brings over 25 years of experience and a reputation as
-                  a recognized speaker and mentor in the dental profession.
-                </p>
-                <a href="/doctors/" class="mt-2 inline-flex items-center gap-1 font-semibold text-primary-700 hover:underline">
-                  Meet Our Doctors <span aria-hidden="true">→</span>
+          </div>
+
+          <div class="grid grid-cols-1 gap-x-12 gap-y-10 sm:grid-cols-2 lg:col-span-2">
+            {apartBlocks.map((block) => (
+              <div>
+                <h3>{block.title}</h3>
+                <p class="mt-3 text-neutral-700">{block.text}</p>
+                <a href={block.href} class="link-arrow mt-4">
+                  {block.label}
+                  <ArrowCircle />
                 </a>
-              </li>
-              <li>
-                <h3>About Us</h3>
-                <p class="mt-1 text-neutral-700">
-                  We take a holistic approach to dental treatment, because oral health affects the
-                  health of your whole body.
-                </p>
-                <a href="/about/" class="mt-2 inline-flex items-center gap-1 font-semibold text-primary-700 hover:underline">
-                  Learn More About Us <span aria-hidden="true">→</span>
-                </a>
-              </li>
-              <li>
-                <h3>New Patients</h3>
-                <p class="mt-1 text-neutral-700">
-                  Hand warmers, scented pillows, and entertainment help make every visit pleasant —
-                  see what to expect before you come in.
-                </p>
-                <a href="/patient-center/new-patients/" class="mt-2 inline-flex items-center gap-1 font-semibold text-primary-700 hover:underline">
-                  Get More Information <span aria-hidden="true">→</span>
-                </a>
-              </li>
-            </ul>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="bg-secondary-600 py-[var(--spacing-section)] text-white" aria-labelledby="testimonials-heading">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 id="testimonials-heading" class="text-center text-white">What Our Patients Say</h2>
-        <div class="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {testimonials.map((t) => (
-            <blockquote class="rounded-[var(--radius-lg)] bg-white/10 p-8">
-              <p class="text-lg leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
-              <p class="mt-4 text-sm font-semibold text-white/90">{t.author}</p>
-            </blockquote>
-          ))}
-        </div>
-        <div class="mt-10 text-center">
-          <a href="/testimonials/" class="btn btn-secondary">Read All Reviews</a>
-        </div>
+    <!-- 5. Testimonials -->
+    <section class="pb-[var(--spacing-section)]" aria-labelledby="testimonials-heading">
+      <div class="container-page">
+        <TestimonialPanel quotes={testimonials} />
       </div>
     </section>
 
-    <!-- Services grid -->
-    <section class="py-[var(--spacing-section)]" aria-labelledby="services-heading">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
-          <h2 id="services-heading">Discover Quality Dental Care for Every Smile</h2>
-          <p class="mt-4 text-lg text-neutral-700">
-            From routine cleanings to complete smile makeovers, explore our comprehensive dental
-            services — cosmetic, family, and general dentistry & orthodontic care, all under one
-            roof in Bernardsville.
-          </p>
-        </div>
+    <!-- 6. Services grid -->
+    <section class="pb-[var(--spacing-section)]" aria-labelledby="services-heading">
+      <div class="container-page">
+        <h2 id="services-heading" class="max-w-2xl">Discover Quality Dental Care for Every Smile</h2>
+        <p class="mt-6 max-w-3xl text-neutral-700">
+          From routine cleanings to complete smile makeovers, explore our comprehensive dental
+          services. Cosmetic, family, and general dentistry &amp; orthodontic care, all under one
+          roof in Bernardsville — each treatment delivered with attention to your comfort and
+          long-term oral health.
+        </p>
+
         <div class="mt-12">
           <ServicesGrid />
         </div>
       </div>
     </section>
 
-    <!-- Everything You Need -->
-    <section class="bg-accent-50 py-[var(--spacing-section)]" aria-labelledby="need-heading">
-      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mx-auto max-w-2xl text-center">
-          <h2 id="need-heading">Everything You Need for Better Dental Care</h2>
-          <p class="mt-4 text-lg text-neutral-700">
-            We're committed to making your dental care experience smooth and stress-free.
-          </p>
-        </div>
+    <!-- 7. Everything You Need for Better Dental Care -->
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="resources-heading">
+      <div class="container-page">
+        <h2 id="resources-heading" class="max-w-2xl">Everything You Need for Better Dental Care</h2>
+        <p class="mt-6 max-w-3xl text-neutral-700">
+          We&rsquo;re committed to making your dental care experience smooth and stress-free.
+        </p>
+
         <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div class="card">
-            <h3>New Patients</h3>
-            <p class="mt-2 text-sm text-neutral-700">
-              Getting started with better dental health is simple. Learn what to expect before your
-              first visit.
-            </p>
-            <a href="/patient-center/new-patients/" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:underline">
-              Get More Information →
-            </a>
-          </div>
-          <div class="card">
-            <h3>Patient Forms</h3>
-            <p class="mt-2 text-sm text-neutral-700">
-              Save time by completing your new-patient paperwork online before you arrive.
-            </p>
-            <a href="/patient-center/patient-forms/" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:underline">
-              Download Forms <span aria-hidden="true">→</span>
-            </a>
-          </div>
-          <div class="card">
-            <h3>Insurance</h3>
-            <p class="mt-2 text-sm text-neutral-700">
-              We work with most major insurance providers to help maximize your benefits.
-            </p>
-            <a href="/patient-center/insurance/" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:underline">
-              Am I Covered? <span aria-hidden="true">→</span>
-            </a>
-          </div>
-          <div class="card">
-            <h3>Pricing</h3>
-            <p class="mt-2 text-sm text-neutral-700">
-              Quality dental care should be accessible — explore transparent pricing and payment
-              options.
-            </p>
-            <a href="/patient-center/pricing/" class="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:underline">
-              Learn More About Pricing <span aria-hidden="true">→</span>
-            </a>
-          </div>
+          {resources.map((resource) => (
+            <div class="card flex flex-col">
+              <h3 class="text-xl">{resource.title}</h3>
+              <p class="mt-3 flex-1 text-sm text-neutral-700">{resource.text}</p>
+              <a href={resource.href} class="link-arrow mt-6">
+                {resource.label}
+                <ArrowCircle />
+              </a>
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
-    <!-- Closing CTA -->
-    <section class="relative overflow-hidden bg-gradient-to-br from-primary-600 to-secondary-600 py-[var(--spacing-section)]" aria-labelledby="cta-heading">
-      <div class="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-        <div class="rounded-[var(--radius-lg)] bg-white p-10 sm:p-14">
-          <h2 id="cta-heading">Begin Your Journey to Better Dental Health</h2>
-          <p class="mt-4 text-lg text-neutral-700">
-            Transform your smile with our expert team. We offer flexible appointment times and
-            personalized care to help you achieve your healthiest smile.
-          </p>
-          <div class="mt-8 flex flex-wrap justify-center gap-4">
-            <a href={ZOCDOC_URL} target="_blank" rel="noopener" class="btn btn-primary">
-              Schedule Appointment
-            </a>
-            <a href="tel:+19082211188" class="btn btn-outline">Call 908-221-1188</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    <!-- 8. Closing CTA -->
+    <CtaSection />
   </main>
 
   <Footer />

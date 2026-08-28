@@ -1,0 +1,49 @@
+# Cloudflare redirect rules.
+#
+# This site replaces the live proudtosmile.com, so every URL pattern the old
+# Tebra/PatientPop site used must land on its equivalent here rather than 404.
+# Old URL patterns are from reference/content-proudtosmile.md.
+#
+# Format: /from  /to  status
+
+# --- Blog: the old site served posts at /post/<slug> -----------------------
+/post/*                     /blog/:splat/                        301
+/blog-archive               /blog/                               301
+
+# --- Providers: /provider/<slug> and the /providers index ------------------
+/provider/patricia-swaintek-lamb-dmd  /doctors/patricia-swaintek-lamb-dmd/  301
+/provider/karima-west-rdh             /doctors/karima-west-rdh/             301
+/providers                            /doctors/                             301
+/provider/*                           /doctors/                             301
+
+# --- Contact: the old site had /contact-us; this build folds contact detail
+#     into the location page (single practice, per client decision) ----------
+/contact-us                 /locations/bernardsville/            301
+
+# --- Legacy /content/<topic> service URLs -----------------------------------
+# Pre-Tebra URLs still cited by the practice's own older blog posts, so real
+# inbound links to them exist. Same mapping the migrated post bodies use.
+/content/dental-gallery                    /smile-gallery/                                  301
+/content/about-our-dental-office           /about/                                          301
+/content/cosmetic-dentistry                /service/cosmetic-and-restorative-dentistry/     301
+/content/dental-bonding-tooth-bonding      /service/cosmetic-and-restorative-dentistry/     301
+/content/dental-crowns                     /service/crowns/                                 301
+/content/dental-implants                   /service/dental-implants/                        301
+/content/dentures-partials                 /service/dentures/                               301
+/content/gum-disease-and-advanced-hygiene  /service/periodontal-therapy/                    301
+/content/porcelain-veneers                 /service/veneers/                                301
+/content/tooth-whitening                   /service/teeth-whitening/                        301
+# No counterpart on this build — send these to the nearest hub rather than 404.
+/content/tmj-or-tmd                        /services/                                       301
+/content/velscope-oral-cancer-screening    /service/cleaning/                               301
+/content/proud-to-smile-celebration-party  /blog/come-and-celebrate-our-exciting-news/      301
+/content/*                                 /services/                                       301
+
+# --- Legal: the old site used non-standard slugs ----------------------------
+/your-privacy               /privacy-policy/                     301
+/our-terms                  /terms-conditions/                   301
+
+# --- Design-reference leftovers ---------------------------------------------
+# /dental-veneers was the reference site's flat service URL. The real practice
+# publishes veneers at /service/veneers, so this is a redirect, not a page.
+/dental-veneers             /service/veneers/                    301

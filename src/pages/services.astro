@@ -1,0 +1,62 @@
+---
+// Services index — the full 14-service grid, matching the reference's
+// services index (reference/screenshots/services-index.png).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import ServicesGrid from '../components/ServicesGrid.astro';
+import CtaSection from '../components/CtaSection.astro';
+import StructuredData from '../components/StructuredData.astro';
+import { services } from '../data/services';
+import { CATEGORY_LINE, CITY, STATE } from '../data/site';
+
+const listSchema = {
+  name: 'Dental Services',
+  itemListElement: services.map((s, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: s.title,
+    url: new URL(`/service/${s.slug}/`, Astro.site).href,
+  })),
+};
+---
+
+<BaseLayout
+  title={`Dental Services in ${CITY}, ${STATE} | Proud To Smile Dentistry`}
+  description="Explore all 14 dental services at Proud To Smile Dentistry in Bernardsville, NJ — cleanings, veneers, implants, clear aligners, sleep apnea treatment and more."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Services' }]} />
+
+    <PageHero
+      title="Discover Quality Dental Care for Every Smile"
+      intro={CATEGORY_LINE}
+      image="/images/proudtosmile/dental-services.webp"
+      imageAlt="Treatment room at Proud To Smile Dentistry in Bernardsville, NJ"
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="services-heading">
+      <div class="container-page">
+        <h2 id="services-heading" class="sr-only">All services</h2>
+        <p class="max-w-3xl text-neutral-700">
+          From routine cleanings to complete smile makeovers, explore our comprehensive dental
+          services. Cosmetic, family, and general dentistry &amp; orthodontic care, all under one
+          roof in {CITY} — each treatment delivered with attention to your comfort and long-term
+          oral health.
+        </p>
+        <div class="mt-12">
+          <ServicesGrid />
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+  <StructuredData type="ItemList" data={listSchema} />
+</BaseLayout>

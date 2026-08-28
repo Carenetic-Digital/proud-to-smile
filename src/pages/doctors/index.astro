@@ -1,0 +1,99 @@
+---
+// Doctors index — the two clinical providers plus the support team, matching
+// the reference's doctors index (reference/screenshots/doctors-index.png).
+//
+// The real practice publishes profile pages for two providers only. Support
+// staff appear as first-name blurbs, exactly as the real /providers page has
+// them — no invented last names or bios.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import { doctors, supportTeam } from '../../data/doctors';
+import { CITY, STATE } from '../../data/site';
+---
+
+<BaseLayout
+  title={`Our Dentists & Team in ${CITY}, ${STATE} | Proud To Smile`}
+  description="Meet Patricia Swaintek-Lamb, DMD and Karima West, RDH, and the team behind Proud To Smile Dentistry in Bernardsville, NJ."
+>
+  <Header currentPath="/doctors/" />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Doctors' }]} />
+
+    <PageHero
+      title="Meet Our Doctors"
+      intro="A close-knit team led by a dentist with over 25 years of experience — and a hygienist our patients ask for by name."
+      image="/images/proudtosmile/smiling-patient-with-provider.webp"
+      imageAlt="A Proud To Smile Dentistry provider with a smiling patient"
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="providers-heading">
+      <div class="container-page">
+        <h2 id="providers-heading" class="sr-only">Our providers</h2>
+        <div class="grid grid-cols-1 gap-10 lg:grid-cols-2">
+          {
+            doctors.map((doctor) => (
+              <article class="card flex flex-col gap-6 sm:flex-row">
+                <img
+                  src={doctor.image}
+                  alt={doctor.imageAlt}
+                  width={doctor.imageWidth}
+                  height={doctor.imageHeight}
+                  loading="lazy"
+                  class="h-56 w-full shrink-0 rounded-[var(--radius-sm)] object-cover object-top sm:h-64 sm:w-44"
+                />
+                <div class="flex flex-col">
+                  <h3 class="text-xl">
+                    {doctor.name}, {doctor.credentials}
+                  </h3>
+                  <p class="mt-1 text-sm font-semibold text-primary-700">{doctor.title}</p>
+                  <p class="mt-4 flex-1 text-sm text-neutral-700">
+                    {doctor.bio[0] ?? doctor.bioPending}
+                  </p>
+                  <a href={`/doctors/${doctor.slug}/`} class="link-arrow mt-6">
+                    View Full Profile
+                    <ArrowCircle />
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="team-heading">
+      <div class="container-page">
+        <h2 id="team-heading">The Rest of the Team</h2>
+        <p class="mt-6 max-w-3xl text-neutral-700">
+          From your first phone call to your last polish, these are the people who look after every
+          visit.
+        </p>
+        <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            supportTeam.map((member) => (
+              <div class="card">
+                <h3 class="text-xl">{member.name}</h3>
+                <p class="mt-1 text-sm font-semibold text-primary-700">{member.role}</p>
+                <p class="mt-3 text-sm text-neutral-700">{member.text}</p>
+              </div>
+            ))
+          }
+        </div>
+        <a href="/about/our-team/" class="link-arrow mt-10">
+          More About Our Team
+          <ArrowCircle />
+        </a>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

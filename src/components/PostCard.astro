@@ -1,0 +1,33 @@
+---
+// component-builder: PostCard
+// Purpose: Blog/news index card (reference/screenshots/blog-index.png).
+import ArrowCircle from './ArrowCircle.astro';
+
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  excerpt?: string;
+}
+
+const { href, title, date, excerpt } = Astro.props;
+const iso = date.toISOString().slice(0, 10);
+const label = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<article class="card flex flex-col">
+  <time datetime={iso} class="text-xs font-semibold uppercase tracking-wide text-primary-700">{label}</time>
+  <h3 class="mt-2 text-xl">
+    <a href={href} class="hover:text-primary-700 hover:underline">{title}</a>
+  </h3>
+  {excerpt && <p class="mt-3 flex-1 text-sm text-neutral-700">{excerpt}</p>}
+  <a href={href} class="link-arrow mt-6" tabindex="-1" aria-hidden="true">
+    Read More
+    <ArrowCircle />
+  </a>
+</article>

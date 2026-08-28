@@ -191,20 +191,46 @@
   }
 
   /* Dark section backgrounds sit below 3:1 against the default blue ring —
-     swap in the light accent so focus stays visible (WCAG 1.4.11). */
+     swap in the light accent so focus stays visible (WCAG 1.4.11).
+     Covers every dark band shade the approved homepage uses (600-900 in both
+     brand families); `.on-dark` is the escape hatch for gradient bands, which
+     carry no bg-* class of their own. Only put `.on-dark` on a band whose
+     focusable children actually sit on the dark ground — the closing CTA's
+     buttons live inside a white card, so that band is deliberately excluded. */
+  .bg-primary-600 :focus-visible,
+  .bg-primary-700 :focus-visible,
+  .bg-primary-800 :focus-visible,
   .bg-primary-900 :focus-visible,
-  .bg-secondary-900 :focus-visible {
+  .bg-secondary-600 :focus-visible,
+  .bg-secondary-700 :focus-visible,
+  .bg-secondary-800 :focus-visible,
+  .bg-secondary-900 :focus-visible,
+  .on-dark :focus-visible {
     outline-color: var(--color-ring-on-dark);
   }
 }
 
 @layer components {
-  /* Pill-shaped buttons — mirrors the reference site's button shape
-     (--btn-radius: 99px), reskinned in brand blue/green. */
+  /* ------------------------------------------------------------------
+     Layout
+     ------------------------------------------------------------------ */
+
+  /* The single page gutter/measure used by every section on the approved
+     homepage. Use this instead of re-typing the utility chain. */
+  .container-page {
+    @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ------------------------------------------------------------------
+     Buttons — pill-shaped, mirroring the reference site's --btn-radius: 99px,
+     reskinned in brand blue/green. All clear 44px min-height for touch.
+     Every button pairs its label with an <ArrowCircle />.
+     ------------------------------------------------------------------ */
   .btn {
     @apply inline-flex min-h-11 items-center gap-2 rounded-full px-6 py-2.5 text-sm font-semibold transition-colors;
   }
 
+  /* Primary action. Per client decision this is the phone number, not booking. */
   .btn-primary {
     @apply bg-primary-600 text-white hover:bg-primary-700;
   }
@@ -217,7 +243,51 @@
     @apply border-2 border-primary-600 bg-white text-primary-700 hover:bg-primary-50;
   }
 
+  /* Ghost button for use on dark bands (insurance strip, testimonial panel) —
+     white outline on the band colour rather than a filled shape. */
+  .btn-on-dark {
+    @apply border-2 border-white/50 bg-transparent text-white hover:bg-white/10;
+  }
+
+  /* Full-width squared bar button that closes each service block. Squared
+     (radius-sm) rather than pill on purpose — it reads as a block footer, not
+     a floating action. Not a `.btn` variant: different shape and geometry. */
+  .btn-bar {
+    @apply inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-[var(--radius-sm)] bg-primary-700 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-800;
+  }
+
+  /* ------------------------------------------------------------------
+     Links & glyphs
+     ------------------------------------------------------------------ */
+
+  /* Inline text link that closes a copy block. Always followed by an
+     <ArrowCircle />. */
+  .link-arrow {
+    @apply inline-flex items-center gap-2 text-sm font-semibold text-primary-700 hover:underline;
+  }
+
+  /* The circular arrow glyph itself — see components/ArrowCircle.astro.
+     Uses `currentColor` throughout so it inherits whatever it sits inside. */
+  .arrow-circle {
+    @apply inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-current;
+  }
+
+  .arrow-circle > svg {
+    @apply h-3 w-3;
+  }
+
+  /* ------------------------------------------------------------------
+     Surfaces
+     ------------------------------------------------------------------ */
+
+  /* Flat white card — radius-md, border, no elevation. */
   .card {
     @apply rounded-[var(--radius-md)] border border-border bg-white p-6;
+  }
+
+  /* Large rounded feature panel (testimonials, image bands, floating CTA
+     cards) — radius-lg, the site's biggest rounding step. */
+  .panel {
+    @apply rounded-[var(--radius-lg)];
   }
 }

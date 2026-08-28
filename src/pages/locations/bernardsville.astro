@@ -1,0 +1,210 @@
+---
+// Location page — clones the reference's location template
+// (reference/screenshots/location-downtown-dental-office.png):
+//   hero with address/hours/map → welcome copy → amenities → community →
+//   full services grid → CTA
+//
+// Locally SEO-optimised for Bernardsville, with LocalBusiness JSON-LD carrying
+// the real address, hours, and phone.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import ServicesGrid from '../../components/ServicesGrid.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import { doctors } from '../../data/doctors';
+import { practiceId } from '../../data/schema';
+import {
+  PRACTICE, CITY, STATE, PHONE, PHONE_HREF, ADDRESS, STREET, POSTAL_CODE,
+  HOURS, MAPS_URL, ZOCDOC_URL, RATING,
+} from '../../data/site';
+import { focusFor } from '../../data/imageFocus';
+
+// This page IS the practice's business page, so rather than declaring a second
+// Dentist node (which would compete with the site-wide one from BaseLayout) it
+// re-states the same @id and adds only `mainEntityOfPage` — JSON-LD consumers
+// merge same-@id nodes, so Google learns which URL represents the business.
+const locationSchema = {
+  '@type': 'Dentist',
+  '@id': practiceId(Astro.site),
+  mainEntityOfPage: new URL('/locations/bernardsville/', Astro.site).href,
+};
+---
+
+<BaseLayout
+  title={`Dentist in ${CITY}, ${STATE} | ${STREET}`}
+  description={`Proud To Smile Dentistry is at ${ADDRESS}. Office hours, directions, and the dental care we offer. Call ${PHONE}.`}
+  image="/images/proudtosmile/dental-services.webp"
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Locations', href: '/locations/' }, { label: CITY }]} />
+
+    <!-- Hero: name, address, hours, map link -->
+    <section class="bg-gradient-to-br from-primary-50 via-white to-secondary-50">
+      <div class="container-page">
+        <div class="grid grid-cols-1 gap-10 py-12 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-20">
+          <div>
+            <h1 class="text-neutral-900">Your Dental Home in {CITY}, {STATE}</h1>
+            <address class="mt-6 not-italic text-lg text-neutral-700">
+              {STREET}<br />
+              {CITY}, {STATE} {POSTAL_CODE}<br />
+              <a href={PHONE_HREF} class="font-semibold text-primary-700 hover:underline">{PHONE}</a>
+            </address>
+
+            <div class="mt-8 flex flex-wrap gap-4">
+              <a href={PHONE_HREF} class="btn btn-primary">
+                Call {PHONE}
+                <ArrowCircle />
+              </a>
+              <a href={MAPS_URL} target="_blank" rel="noopener" class="btn btn-outline">
+                Get Directions
+                <ArrowCircle />
+              </a>
+            </div>
+
+            <p class="mt-8 text-sm text-neutral-700">
+              <span class="font-semibold text-neutral-900">{RATING}</span> average rating on Google
+            </p>
+          </div>
+
+          <div class="card border-t-4 border-t-accent-200">
+            <h2 class="text-xl">Office Hours</h2>
+            <ul class="mt-4 space-y-2 text-sm text-neutral-700">
+              {
+                HOURS.map((h) => (
+                  <li class="flex justify-between gap-4 border-b border-border pb-2 last:border-0">
+                    <span class="font-medium text-neutral-900">{h.day}</span>
+                    <span>{h.time}</span>
+                  </li>
+                ))
+              }
+            </ul>
+            <a href={ZOCDOC_URL} target="_blank" rel="noopener" class="link-arrow mt-6">
+              Book Online Through ZocDoc
+              <ArrowCircle />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Welcome -->
+    <section class="py-[var(--spacing-section)]" aria-labelledby="welcome-heading">
+      <div class="container-page">
+        <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 id="welcome-heading">Your Family&rsquo;s Dental Home</h2>
+            <p class="mt-6 text-neutral-700">
+              Proud To Smile Dentistry has served {CITY} and the surrounding Somerset and Morris
+              County communities for over 25 years. Dr. Patricia Swaintek-Lamb owns the practice and
+              treats patients here alongside a team most of our families know by name.
+            </p>
+            <p class="mt-4 text-neutral-700">
+              Everything happens under one roof — cleanings, cosmetic work, implants, clear aligner
+              therapy, and sleep apnea care — so you are not sent across the county for treatment.
+            </p>
+            <a href="/about/" class="link-arrow mt-8">
+              More About the Practice
+              <ArrowCircle />
+            </a>
+          </div>
+          <img
+            src="/images/proudtosmile/dental-services.webp"
+            alt={`Treatment room at Proud To Smile Dentistry in ${CITY}, ${STATE}`}
+            width="1420"
+            height="700"
+            loading="lazy"
+            class={`panel h-64 w-full object-cover ${focusFor('dental-services.webp')} sm:h-80 lg:h-[24rem]`}
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Amenities -->
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="comfort-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="comfort-heading">Modern Comfort, Advanced Care</h2>
+          <p class="mt-6 text-neutral-700">
+            Hand warmers, scented pillows, and entertainment like headphones and television help
+            make dental visits pleasant. The practice runs on modern, state-of-the-art technology —
+            digital X-rays, intraoral scanning, and laser treatment among it.
+          </p>
+        </div>
+        <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {
+            [
+              { t: 'Hand Warmers', d: 'Because cold hands make a long appointment longer.' },
+              { t: 'Scented Pillows', d: 'A small thing that makes the chair a great deal easier.' },
+              { t: 'Headphones & TV', d: 'Entertainment through your treatment, if you want it.' },
+              { t: 'Modern Technology', d: 'Digital imaging and intraoral scanning as standard.' },
+            ].map((item) => (
+              <div class="card">
+                <h3 class="text-xl">{item.t}</h3>
+                <p class="mt-3 text-sm text-neutral-700">{item.d}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Providers here -->
+    <section class="py-[var(--spacing-section)]" aria-labelledby="providers-heading">
+      <div class="container-page">
+        <h2 id="providers-heading">Who You&rsquo;ll See</h2>
+        <div class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {
+            doctors.map((doctor) => (
+              <div class="card flex items-center gap-5">
+                <img
+                  src={doctor.image}
+                  alt={doctor.imageAlt}
+                  width={doctor.imageWidth}
+                  height={doctor.imageHeight}
+                  loading="lazy"
+                  class="h-28 w-24 shrink-0 rounded-[var(--radius-sm)] object-cover object-top"
+                />
+                <div>
+                  <h3 class="text-xl">
+                    {doctor.name}, {doctor.credentials}
+                  </h3>
+                  <p class="mt-1 text-sm text-neutral-700">{doctor.title}</p>
+                  <a href={`/doctors/${doctor.slug}/`} class="link-arrow mt-3">
+                    View Profile
+                    <ArrowCircle />
+                  </a>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+
+    <!-- Services offered here -->
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="services-heading">
+      <div class="container-page">
+        <h2 id="services-heading" class="max-w-2xl">Dental Care Offered in {CITY}</h2>
+        <p class="mt-6 max-w-3xl text-neutral-700">
+          Every treatment below is available at this office.
+        </p>
+        <div class="mt-12">
+          <ServicesGrid />
+        </div>
+      </div>
+    </section>
+
+    <CtaSection
+      heading={`Visit Us in ${CITY}`}
+      text={`We're at ${ADDRESS}. Call ${PHONE} or book online.`}
+    />
+  </main>
+
+  <Footer />
+  <StructuredData type="Dentist" data={locationSchema} />
+</BaseLayout>

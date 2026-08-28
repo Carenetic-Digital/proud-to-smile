@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import SEOHead from '../components/SEOHead.astro';
 import StructuredData from '../components/StructuredData.astro';
+import { practiceSchema, websiteSchema } from '../data/schema';
 
 interface Props {
   title: string;
@@ -17,27 +18,6 @@ const {
   noindex = false,
 } = Astro.props;
 
-// Site-wide structured data — source: reference/content-proudtosmile.md section 1
-const organizationData = {
-  name: 'Proud To Smile Dentistry',
-  url: Astro.site?.href,
-  logo: new URL('/images/proudtosmile/logo.webp', Astro.site).href,
-  image: new URL('/images/proudtosmile/logo.webp', Astro.site).href,
-  telephone: '+1-908-221-1188',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: '10 Anderson Hill Road',
-    addressLocality: 'Bernardsville',
-    addressRegion: 'NJ',
-    postalCode: '07924',
-    addressCountry: 'US',
-  },
-  sameAs: [
-    'https://www.facebook.com/Proudtosmile/',
-    'https://www.instagram.com/proudtosmile/',
-    'https://www.youtube.com/channel/UClzPIteZ-7o4VpC3dbZ2UFA',
-  ],
-};
 ---
 
 <!doctype html>
@@ -72,8 +52,11 @@ const organizationData = {
       noindex={noindex}
     />
 
-    <!-- Dentist / LocalBusiness Structured Data (site-wide) -->
-    <StructuredData type="LocalBusiness" data={{ '@type': 'Dentist', ...organizationData }} />
+    <!-- Site-wide entity graph: one Dentist node and one WebSite node, both
+         carrying stable @ids so per-page schema references them instead of
+         declaring competing businesses. -->
+    <StructuredData type="Dentist" data={practiceSchema(Astro.site)} />
+    <StructuredData type="WebSite" data={websiteSchema(Astro.site)} />
   </head>
   <body class="font-body text-neutral-900 bg-white antialiased">
     <slot />

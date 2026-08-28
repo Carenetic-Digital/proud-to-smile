@@ -1,0 +1,48 @@
+---
+// component-builder: CtaSection
+// Purpose: Closing call-to-action — a white card floating on a dark brand
+// gradient band. Ends every page on the site; pass `heading`/`text` to tailor
+// it, leave them for the homepage default.
+//
+// Note the band deliberately carries no `.on-dark` class: its focusable
+// elements sit inside the white card, so they keep the default blue focus
+// ring (see the focus-ring block in global.css).
+import ArrowCircle from './ArrowCircle.astro';
+
+interface Props {
+  heading?: string;
+  text?: string;
+  headingId?: string;
+}
+
+const {
+  heading = 'Begin Your Journey to Better Dental Health',
+  text = 'Transform your smile with our expert team. We offer flexible appointment times and personalized care to help you achieve your healthiest smile.',
+  headingId = 'cta-heading',
+} = Astro.props;
+
+const ZOCDOC_URL =
+  'https://www.zocdoc.com/practice/proud-to-smile-dentistry-90291?lock=true&referrerType=widget';
+---
+
+<section
+  class="bg-gradient-to-br from-primary-700 to-secondary-700 py-[var(--spacing-section)]"
+  aria-labelledby={headingId}
+>
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <div class="panel bg-white p-10 text-center sm:p-14">
+      <h2 id={headingId}>{heading}</h2>
+      <p class="mt-4 text-lg text-neutral-700">{text}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <a href="tel:+19082211188" class="btn btn-primary">
+          Call 908-221-1188
+          <ArrowCircle />
+        </a>
+        <a href={ZOCDOC_URL} target="_blank" rel="noopener" class="btn btn-outline">
+          Schedule Appointment
+          <ArrowCircle />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

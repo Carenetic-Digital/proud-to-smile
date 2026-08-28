@@ -1,0 +1,67 @@
+---
+// Patient Center hub.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import FeatureCards from '../../components/FeatureCards.astro';
+import { PATIENT_FORMS_URL } from '../../data/site';
+
+const cards = [
+  { title: 'New Patients', text: 'What to expect, what to bring, and how to make your first visit easy.', href: '/patient-center/new-patients/', label: 'Get More Information' },
+  { title: 'Patient Forms', text: 'Complete your new-patient intake packet online before you arrive.', href: '/patient-center/patient-forms/', label: 'Start My Forms' },
+  { title: 'Insurance', text: 'We accept all major insurance providers — find out how your plan applies.', href: '/patient-center/insurance/', label: 'Am I Covered?' },
+  { title: 'Pricing', text: 'How we handle cost and estimates so there are no surprises.', href: '/patient-center/pricing/', label: 'Learn More About Pricing' },
+  { title: 'Financial Options', text: 'Ways to spread the cost of treatment across time.', href: '/patient-center/financial-options/', label: 'See Your Options' },
+  { title: 'FAQs', text: 'Answers to the questions our front desk hears most often.', href: '/patient-center/faqs/', label: 'Read the FAQs' },
+  { title: 'Bill Pay', text: 'Settle your balance online through our secure patient portal.', href: '/bill-pay/', label: 'Pay My Bill' },
+  { title: 'Resources', text: 'Short videos and guides explaining treatments in plain language.', href: '/resources/', label: 'Browse Resources' },
+];
+---
+
+<BaseLayout
+  title="Patient Center in Bernardsville, NJ | Proud To Smile"
+  description="New patient information, forms, insurance, pricing, financial options, and FAQs for Proud To Smile Dentistry in Bernardsville, NJ."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs crumbs={[{ label: 'Patient Center' }]} />
+
+    <PageHero
+      title="Everything You Need for Better Dental Care"
+      intro="We're committed to making your dental care experience smooth and stress-free. Here's everything you need before, during, and after your visit."
+      image="/images/proudtosmile/smiling-patient-with-provider.webp"
+      imageAlt="A patient being welcomed at Proud To Smile Dentistry"
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="cards-heading">
+      <div class="container-page">
+        <h2 id="cards-heading" class="sr-only">Patient resources</h2>
+        <FeatureCards cards={cards} columns={4} />
+      </div>
+    </section>
+
+    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="forms-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="forms-heading">Save Time Before You Arrive</h2>
+          <p class="mt-6 text-neutral-700">
+            Our New Patient Health and Dental History Intake Form is completed online. Filling it in
+            ahead of your appointment means you spend your visit in the chair rather than the
+            waiting room.
+          </p>
+          <a href={PATIENT_FORMS_URL} target="_blank" rel="noopener" class="btn btn-primary mt-8">
+            Complete My Forms Online
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

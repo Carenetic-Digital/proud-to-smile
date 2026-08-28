@@ -1,0 +1,80 @@
+---
+// Financial Options.
+//
+// The real site publishes no named financing partner (no CareCredit, Sunbit,
+// etc.). Naming one would be fabrication — this page describes the categories
+// and routes the patient to the front desk to discuss specifics.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CtaSection from '../../components/CtaSection.astro';
+import ArrowCircle from '../../components/ArrowCircle.astro';
+import { PHONE, PHONE_HREF } from '../../data/site';
+---
+
+<BaseLayout
+  title="Financial Options in Bernardsville, NJ | Proud To Smile"
+  description="Ways to manage the cost of dental treatment at Proud To Smile Dentistry in Bernardsville, NJ. Call 908-221-1188 to discuss what works for your budget."
+>
+  <Header />
+
+  <main id="main-content">
+    <Breadcrumbs
+      crumbs={[{ label: 'Patient Center', href: '/patient-center/' }, { label: 'Financial Options' }]}
+    />
+
+    <PageHero
+      title="Financial Options"
+      intro="Cost should not be the reason you put off care you need. Let's find an approach that works."
+    />
+
+    <section class="py-[var(--spacing-section)]" aria-labelledby="options-heading">
+      <div class="container-page">
+        <div class="max-w-3xl">
+          <h2 id="options-heading">Ways to Manage Treatment Cost</h2>
+          <p class="mt-6 text-neutral-700">
+            Every patient&rsquo;s situation is different, so rather than a one-size-fits-all plan,
+            our patient care coordinator will work through the options with you. Marcela handles
+            treatment and financial planning and insurance coordination, and this is exactly the
+            conversation she has every day.
+          </p>
+
+          <h3 class="mt-10 text-xl">What We Can Look At Together</h3>
+          <ul class="mt-4 space-y-3">
+            {
+              [
+                'Applying your insurance benefits to bring the out-of-pocket figure down',
+                'Phasing a larger treatment plan across appointments — and across benefit years',
+                'Prioritising what is clinically urgent and scheduling the rest for later',
+                'Third-party payment plans, where they suit your situation',
+              ].map((item) => (
+                <li class="flex gap-3 text-neutral-700">
+                  <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-600" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+
+          <div class="card mt-10 border-t-4 border-t-accent-200">
+            <h3 class="text-xl">Talk It Through</h3>
+            <p class="mt-3 text-neutral-700">
+              Call <a href={PHONE_HREF} class="font-semibold text-primary-700 hover:underline">{PHONE}</a>
+              and ask for our patient care coordinator. Bring your questions — there is no wrong one.
+            </p>
+            <a href="/patient-center/insurance/" class="link-arrow mt-6">
+              Check Your Insurance First
+              <ArrowCircle />
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <CtaSection />
+  </main>
+
+  <Footer />
+</BaseLayout>

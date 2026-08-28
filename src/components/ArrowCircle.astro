@@ -1,0 +1,21 @@
+---
+// component-builder: ArrowCircle
+// Purpose: The circular arrow glyph that suffixes every CTA button and text
+// link across the site. Cloned from the design reference and made the
+// site-wide standard when the client approved homepage Concept C (v3).
+//
+// Renders decorative-only markup (aria-hidden) — the link text carries the
+// accessible name, so this never needs a label of its own.
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class:list={['arrow-circle', className]} aria-hidden="true">
+  <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+    <path d="M2 6h8M6.5 2.5 10 6l-3.5 3.5" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+</span>
