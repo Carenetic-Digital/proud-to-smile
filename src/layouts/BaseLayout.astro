@@ -57,6 +57,12 @@ const {
          declaring competing businesses. -->
     <StructuredData type="Dentist" data={practiceSchema(Astro.site)} />
     <StructuredData type="WebSite" data={websiteSchema(Astro.site)} />
+    <!-- BugHerd visual feedback (staging only — remove before launch) -->
+    <script
+      is:inline
+      type="text/javascript"
+      src="https://www.bugherd.com/sidebarv2.js?apikey=qfutgpp1xfxfslr6zitj6a"
+      async="true"></script>
   </head>
   <body class="font-body text-neutral-900 bg-white antialiased">
     <slot />
