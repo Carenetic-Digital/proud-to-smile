@@ -1,0 +1,42 @@
+---
+// EmbedPlaceholder
+// Purpose: stand in for a third-party widget that gets dropped in after
+// client sign-off. Renders a clearly-marked dashed box so a staging reviewer
+// can see where the embed lands without mistaking it for finished design.
+//
+// The content it replaces is never deleted — e.g. the 26 real reviews stay in
+// src/data/testimonials.ts, so restoring a block is a one-commit revert.
+
+interface Props {
+  /** Placeholder copy, e.g. "An ELFsight reviews embed will be added here" */
+  label: string;
+  /** `dark` for placement on the primary-800 panels, `light` on white/50 sections */
+  tone?: 'light' | 'dark';
+  /** Approximate height of the finished embed, so the page keeps its rhythm */
+  minHeight?: string;
+  class?: string;
+}
+
+const { label, tone = 'light', minHeight = '18rem', class: className = '' } = Astro.props;
+
+const toneClasses =
+  tone === 'dark'
+    ? 'border-white/40 bg-white/5 text-white'
+    : 'border-neutral-400 bg-neutral-50 text-neutral-700';
+---
+
+<div
+  class:list={[
+    'flex flex-col items-center justify-center gap-3 rounded-[var(--radius-md)] border-2 border-dashed px-6 py-12 text-center',
+    toneClasses,
+    className,
+  ]}
+  style={`min-height: ${minHeight}`}
+  data-embed-placeholder
+>
+  <svg class="h-8 w-8 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="2" stroke-dasharray="4 3" />
+    <path d="M8 12h8M12 8v8" stroke-linecap="round" />
+  </svg>
+  <p class="text-base font-semibold">{label}</p>
+</div>

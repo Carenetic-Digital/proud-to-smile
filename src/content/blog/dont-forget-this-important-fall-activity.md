@@ -7,7 +7,7 @@ draft: false
 
 It’s hard to believe that October is here already! We don’t know about you, but it feels like we were just enjoying the lazy days of summer. Now, many of you are out and about, busy with fall activities. We know that life can be hectic, but if you or a loved one has been putting off or delaying a dental treatment, there is no time like the present to schedule the appointment. Delaying a recommended treatment can lead to a dental emergency, the need for additional treatments, and added expenses. Continue reading to learn more.
 
-### Schedule Your Next Appointment Today!
+## Schedule Your Next Appointment Today!
 
 We know that we aren’t your favorite place to visit, especially when you are busy with the many responsibilities of life. It is important to remember that you only have one set of teeth that are designed to last your entire life, and it is important to care for them properly. Not only does routine and recommended dental care help prevent a dental emergency, but it ensures you have lasting oral health for many years to come. Postponing a recommended treatment increases your risk of needing additional treatments, and experiencing a dental emergency, not to mention the added expense.
 

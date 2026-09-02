@@ -7,7 +7,7 @@ draft: false
 
 Dr. Swaintek-Lamb is thrilled to announce that the name of her dental practice is changing to Proud to Smile Dentistry! She wants to ensure all of her patients that she will still be offering the same treatments with the same level of service you are accustomed to. To celebrate the name change she is going to be hosting a party to celebrate with her patients, friends, family, and local businesses. This party is open to all!
 
-### Come Celebrate With Us!
+## Come Celebrate With Us!
 
 If you are looking for a fun way to celebrate the fall and you would like to learn more about the practice’s name change, be sure to join Dr. Swaintek-Lamb and her team on October 23, 2022. The practice is hosting a grand re-opening celebration and fall festival, complete with music, food, drinks, and opportunities to win some great prizes.
 
@@ -27,7 +27,7 @@ First 25 people to RSVP will get a FREE entry for the basket drawing
 
 First 40 people to arrive will get a SPECIAL PRIZE
 
-### Chance to Win Invisalign®
+## Chance to Win Invisalign®
 
 Not only will you be celebrating and enjoying food, drinks, music, and fun, but you will also have an opportunity to win free Invisalign services. If you have been dreaming of straighter teeth, now is the time to make your dreams a reality. Anyone who attends the party on October 23rd and starts Invisalign treatment before the date specified will be entered into a drawing to receive free treatment.
 

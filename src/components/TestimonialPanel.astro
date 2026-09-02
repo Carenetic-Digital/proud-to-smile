@@ -6,7 +6,13 @@
 //
 // Quotes are real reviews from reference/content-proudtosmile.md section 5.
 // Never fabricate a testimonial to fill this component.
+//
+// STAGING: the rendered quote list is swapped for an EmbedPlaceholder while
+// the practice stands up its ELFsight reviews widget. The `quotes` prop and
+// its callers are deliberately left intact so restoring the list is a one-
+// commit revert of this block — do not delete the data.
 import ArrowCircle from './ArrowCircle.astro';
+import EmbedPlaceholder from './EmbedPlaceholder.astro';
 
 interface Quote {
   quote: string;
@@ -28,20 +34,11 @@ const { quotes, headingId = 'testimonials-heading' } = Astro.props;
     <path d="M0 40V22.9C0 10.6 6.9 2 18.6 0l2.3 5.4C14.4 7.6 10.6 12 10.3 18.6H21V40H0Zm35 0V22.9C35 10.6 41.9 2 53.6 0l2.3 5.4C49.4 7.6 45.6 12 45.3 18.6H56V40H35Z" />
   </svg>
 
-  <ul class="mx-auto mt-10 max-w-3xl space-y-6">
-    {quotes.map((t) => (
-      <li class="rounded-[var(--radius-md)] bg-white/10 px-6 py-8 text-center sm:px-10">
-        <blockquote>
-          <p class="text-lg leading-relaxed">&ldquo;{t.quote}&rdquo;</p>
-          <footer class="mt-4 text-sm text-white/85">
-            <cite class="not-italic font-semibold">{t.author}</cite>
-            <span aria-hidden="true"> | </span>
-            {t.context}
-          </footer>
-        </blockquote>
-      </li>
-    ))}
-  </ul>
+  <EmbedPlaceholder
+    label="An ELFsight reviews embed will be added here"
+    tone="dark"
+    class="mx-auto mt-10 max-w-3xl"
+  />
 
   <div class="mt-10 text-center">
     <a href="/testimonials/" class="btn btn-on-dark">

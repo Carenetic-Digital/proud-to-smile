@@ -7,7 +7,7 @@ draft: false
 
 Are you missing one or more teeth and would love to choose dental implants as your tooth replacement option but are hesitant because you are unsure if you would be a good candidate for treatment? While we offer a number of tooth replacement options, [dental implants](/service/dental-implants/) are usually our treatment recommendation and the ideal choice for most patients. Thankfully, due to advancements in dental technology, more patients than ever before are eligible to receive dental implants. Unfortunately, there are still some patients who may not qualify. Read on to learn if you would be a candidate for dental implant treatment.
 
-### Requirements for Dental Implants
+## Requirements for Dental Implants
 
 If you need a tooth replacement option, dental implants are an excellent choice because of the many benefits they offer. If you are unfamiliar with the procedure, it consists of several steps. First, a titanium post is surgically implanted in the jawbone to act as a replacement for the tooth root. Over time, the post fuses with the jawbone to create a sturdy structure for a replacement tooth, such as a dental crown.
 

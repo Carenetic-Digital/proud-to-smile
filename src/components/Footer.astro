@@ -76,7 +76,7 @@ const currentYear = new Date().getUTCFullYear();
           <a href="/locations/bernardsville/" class="hover:text-white hover:underline">{ADDRESS}</a><br />
           <a href={PHONE_HREF} class="font-medium text-white hover:underline">{PHONE}</a>
         </address>
-        <h3 class="mt-6 text-sm font-semibold uppercase tracking-wide text-white/75">Hours</h3>
+        <h2 class="mt-6 text-sm font-semibold uppercase tracking-wide text-white/75">Hours</h2>
         <ul class="mt-2 space-y-1 text-sm text-white/80">
           {hours.map((h) => (
             <li class="flex justify-between gap-4">
@@ -88,7 +88,7 @@ const currentYear = new Date().getUTCFullYear();
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-white/75">Patient Center</h3>
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-white/75">Patient Center</h2>
         <ul class="mt-3 space-y-2 text-sm">
           {patientCenterLinks.map((link) => (
             <li><a href={link.href} class="text-white/80 hover:text-white hover:underline">{link.label}</a></li>
@@ -97,7 +97,7 @@ const currentYear = new Date().getUTCFullYear();
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-white/75">Quick Links</h3>
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-white/75">Quick Links</h2>
         <ul class="mt-3 space-y-2 text-sm">
           {quickLinks.map((link) => (
             <li>
@@ -115,7 +115,7 @@ const currentYear = new Date().getUTCFullYear();
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-wide text-white/75">Follow Us</h3>
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-white/75">Follow Us</h2>
         <ul class="mt-3 flex gap-3">
           <li>
             <a

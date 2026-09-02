@@ -7,7 +7,7 @@ draft: false
 
 At Proud to Smile Dentistry, we do everything we can to help our patients achieve long-lasting oral health. During routine hygiene examinations, we do more than just clean your teeth. We also inspect your mouth for signs of dental decay and other harmful conditions as well. One condition we look for is mouth and oral cancer. November is Mouth Cancer Awareness Month, which helps promote awareness about this form of cancer. Mouth cancer is a type of head and neck cancer that can develop anywhere in the mouth or oral cavity. It can be found on areas such as the lips, tongue, cheeks, and gums. Although mouth and throat cancer are not the leading forms of cancer in the US, it is still important to learn more about what can cause them.
 
-### Risk Factors
+## Risk Factors
 
 There are some risk factors that are important to mention, as they can lead to the development of mouth and oral cancer. We want you to be mindful and aware of the risks so that you can change your lifestyle if necessary. Risk factors for mouth and oral cancer include:
 

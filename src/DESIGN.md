@@ -102,6 +102,15 @@ homepage language — reuse them rather than hand-rolling equivalent markup.
 - **`TestimonialPanel.astro`** — Large `primary-800` rounded panel with the
   decorative quote glyph. Takes a `quotes` array (`quote` / `author` / `context`).
   Only ever pass real reviews from `reference/content-proudtosmile.md` section 5.
+  STAGING: the quote list currently renders an `EmbedPlaceholder` instead — the
+  practice is standing up an ELFsight reviews widget. Same swap is in place on
+  `/testimonials/` and the doctor template. The reviews are untouched in
+  `src/data/testimonials.ts` and `src/data/doctors.ts`, so restoring the rendered
+  quotes is a revert of those three blocks.
+- **`EmbedPlaceholder.astro`** — Dashed placeholder box marking where a
+  third-party widget lands. Takes `label`, `tone` (`light` / `dark` for the
+  `primary-800` panels), and `minHeight`. Carries `data-embed-placeholder`, so
+  `grep -rl data-embed-placeholder dist` lists every one still shipping.
 - **`ServicesGrid.astro`** — The service grid: two columns, each block listing its
   sub-treatments over divider rules and closing with a full-width `.btn-bar`.
   Renders all 14 real services by default; pass `only={['crowns', ...]}` to show a

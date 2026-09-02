@@ -7,7 +7,7 @@ draft: false
 
 After a long winter, we are thrilled that the summer season is a few short days away! Do you have summer plans and would love to improve your smile to show it off during your event or vacation? If you are unhappy with the appearance of your smile, we can create a treatment plan to help you get the smile of your dreams. We offer a number of cosmetic dentistry treatments that can make any improvement you would like to see, large or small. Read on to learn more about the cosmetic procedures we offer and how they can improve your smile.
 
-### Why Choose Cosmetic Dentistry?
+## Why Choose Cosmetic Dentistry?
 
 Over the past many years, there have been a number of advancements in the way dentistry is practiced as well as dental technology that have increased the number of treatments available to patients. Today, there are numerous cosmetic dentistry options available that can bring about any changes you would like to see to your smile. [Cosmetic dentistry](/service/cosmetic-and-restorative-dentistry/) can improve imperfections such as:
 
@@ -18,7 +18,7 @@ Over the past many years, there have been a number of advancements in the way de
 - Missing teeth
 - Teeth that are misshapen or jagged
 
-### Cosmetic Dentistry Treatments We Offer
+## Cosmetic Dentistry Treatments We Offer
 
 We offer a number of treatments that can be used to enhance the appearance of your smile. Following an examination, we may recommend a treatment such as:
 

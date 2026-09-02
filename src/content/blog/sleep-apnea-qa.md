@@ -7,7 +7,7 @@ draft: false
 
 Do you wake in the morning feeling unrested? Or do you or a loved one snore loudly each night? If you answered yes to these questions, there is a chance you are suffering from a common sleep condition that can be detrimental to your overall health but often remains undiagnosed. Sleep apnea is a condition that causes patients to stop breathing for a short time because the tongue blocks the airway, causing obstruction. Each time you stop breathing, due to lack of oxygen, your brain is alerted to the disruption, causing you to wake.
 
-### What Are Symptoms of Sleep Apnea?
+## What Are Symptoms of Sleep Apnea?
 
 Sleep apnea often remains diagnosed because patients often assume they are just poor sleepers and don’t realize they are experiencing an issue. Patients also don’t know they snore unless a family member alerts them to a problem. Sleep apnea symptoms can include:
 
@@ -22,7 +22,7 @@ Sleep apnea often remains diagnosed because patients often assume they are just 
 - Difficulty staying asleep
 - Irritability
 
-### What Are the Effects of Sleep Apnea?
+## What Are the Effects of Sleep Apnea?
 
 Unfortunately, sleep apnea can cause severe issues with your overall health. Quality sleep is needed to recharge not only our bodies, but our minds as well. When we are not fully rested, we open ourselves to experiencing accidents. Untreated sleep apnea can also lead to other health issues such as:
 
@@ -33,7 +33,7 @@ Unfortunately, sleep apnea can cause severe issues with your overall health. Qua
 - Increased risk of mood disorders such as depression
 - Low blood oxygen levels
 
-### Who Can Help?
+## Who Can Help?
 
 At Proud to Smile, we can help with the early identification, intervention and prevention of airway issues. Early detection and prevention is key in avoiding many of the side effects mentioned above.
 

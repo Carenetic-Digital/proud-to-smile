@@ -7,11 +7,11 @@ draft: false
 
 Do you find yourself avoiding certain foods because you experience jaw discomfort when you eat? Or do you suffer from constant headaches and are not sure of the cause? If you answered yes to these questions or find yourself experiencing other discomfort with your jaw and face, there is a common condition that can be causing all of the discomfort you have been experiencing. Continue reading to learn more about this condition and what can be done to offer relief to your symptoms.
 
-### What is TMD?
+## What is TMD?
 
 If you find yourself experiencing facial discomfort and unexplained frequent headaches you may be suffering from temporomandibular joint disorder, also commonly known as TMD. TMD is a chronic, degenerative disease that arises from problems with the jaw joints and face muscles. When the joint that attaches to your skull and jawbone is not functioning properly, it can cause great discomfort while opening and closing your mouth.
 
-### Symptoms of TMD
+## Symptoms of TMD
 
 TMD is a unique condition in that each patient may experience different symptoms. Unfortunately, a large percentage of those suffering remain undiagnosed. Many TMD symptoms are often misdiagnosed as another condition by other medical professionals. You may be suffering from TMD if you experience symptoms such as:
 
@@ -25,7 +25,7 @@ TMD is a unique condition in that each patient may experience different symptoms
 - Difficulty chewing
 - Ringing in the ears
 
-### Ways to Help Symptoms
+## Ways to Help Symptoms
 
 While waiting for your appointment we recommend eating a diet of softer foods. It is also wise to check your posture to be sure you are sitting straight. It can also be helpful to use hot and cold compresses when needed.
 

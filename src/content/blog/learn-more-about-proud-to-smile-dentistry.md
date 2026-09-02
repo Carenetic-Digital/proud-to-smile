@@ -7,7 +7,7 @@ draft: false
 
 This is an exciting time for Dr. Patti Swaintek-Lamb, as her dental practice has completed the expansion and transition from Aesthetic Dentistry of Bernardsville to Proud to Smile Dentistry. Dr. Patti has been a member of the Bernardsville community for over 27 years and has recently fulfilled her dream to enhance the practice that she has created and all of her patients know and love.
 
-### Why Proud to Smile Dentistry?
+## Why Proud to Smile Dentistry?
 
 Dr. Patti has brought her vision to life with Proud to Smile Dentistry. Her goal has always been to help her patients have a smile that they are proud to show, so she wanted the name of her practice to represent her tagline and what she has been creating for her patients for many years. Dr. Patti and her team are still providing the same level of service, but in an [upgraded environment](/about/).
 

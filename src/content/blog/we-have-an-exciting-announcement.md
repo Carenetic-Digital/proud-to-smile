@@ -5,7 +5,7 @@ excerpt: "Aesthetic Dentistry of Bernardsville is becoming Proud To Smile Dentis
 draft: false
 ---
 
-### Aesthetic Dentistry of Bernardsville is becoming Proud To Smile Dentistry!
+## Aesthetic Dentistry of Bernardsville is becoming Proud To Smile Dentistry!
 
 It’s an exciting time for me and my team, and we are thrilled to share it with all of our valued patients. The practice is in the final stages of a big expansion. The new office will be ready in the fall, which is right around the corner. And with this new office, comes a new look and a new name — Proud To Smile Dentistry.
 

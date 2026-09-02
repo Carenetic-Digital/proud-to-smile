@@ -7,7 +7,7 @@ draft: false
 
 At Proud to Smile Dentistry, caring for your oral health is our passion. This is one of the reasons we frequently remind patients about the importance of routine oral care. During regular oral hygiene examinations, we not only thoroughly clean your teeth, but we also inspect for other issues. Two issues we inspect for are gum disease and oral cancer. Both of these conditions can have serious and lasting effects if not diagnosed and treated in a timely fashion. The American Cancer Society estimates that over 54,000 people have been diagnosed with oral or throat cancer in 2022.
 
-### Signs of Oral Cancer
+## Signs of Oral Cancer
 
 Oral cancer can affect any part of your mouth, including the lips, gums, cheeks, tongue, and even the roof and floor. Between appointments at our office, it is important to be mindful of any changes that you may see in and around your mouth. Warning signs of oral cancer can include:
 

@@ -1,13 +1,18 @@
 ---
 // Testimonials — all 26 real reviews from the live /testimonials page.
 // NEVER add a review that isn't in reference/content-proudtosmile.md section 5.
+//
+// STAGING: both card grids are swapped for an EmbedPlaceholder while the
+// practice stands up its ELFsight reviews widget. The reviews themselves stay
+// in src/data/testimonials.ts so restoring the grids is a one-commit revert —
+// do not delete the data.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import PageHero from '../components/PageHero.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import CtaSection from '../components/CtaSection.astro';
-import { testimonials, featuredTestimonials } from '../data/testimonials';
+import EmbedPlaceholder from '../components/EmbedPlaceholder.astro';
 import { RATING, PRACTICE } from '../data/site';
 ---
 
@@ -36,48 +41,14 @@ import { RATING, PRACTICE } from '../data/site';
       </div>
     </PageHero>
 
-    <!-- The longer quotes the practice features -->
-    <section class="py-[var(--spacing-section)]" aria-labelledby="featured-heading">
+    {/* Patient reviews — ELFsight widget drops in here */}
+    <section class="py-[var(--spacing-section)]" aria-labelledby="reviews-heading">
       <div class="container-page">
-        <h2 id="featured-heading" class="sr-only">Featured reviews</h2>
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {
-            featuredTestimonials.map((t) => (
-              <blockquote class="card flex flex-col border-t-4 border-t-accent-200">
-                <p class="flex-1 text-lg leading-relaxed text-neutral-700">&ldquo;{t.quote}&rdquo;</p>
-                <footer class="mt-6 text-sm">
-                  <cite class="not-italic font-semibold text-neutral-900">{t.author}</cite>
-                  <span class="text-neutral-700"> · {t.context}</span>
-                </footer>
-              </blockquote>
-            ))
-          }
-        </div>
-      </div>
-    </section>
-
-    <!-- Every review from the practice's reviews page -->
-    <section class="bg-secondary-50 py-[var(--spacing-section)]" aria-labelledby="all-heading">
-      <div class="container-page">
-        <h2 id="all-heading">More Patient Reviews</h2>
-        <p class="mt-6 max-w-3xl text-neutral-700">
-          {testimonials.length} reviews from patients treated between April 2023 and October 2025.
-        </p>
-        <ul class="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {
-            testimonials.map((t) => (
-              <li class="card flex flex-col">
-                <blockquote class="flex flex-1 flex-col">
-                  <p class="flex-1 text-neutral-700">&ldquo;{t.quote}&rdquo;</p>
-                  <footer class="mt-5 text-sm">
-                    <cite class="not-italic font-semibold text-neutral-900">{t.author}</cite>
-                    <span class="text-neutral-700"> · {t.context}</span>
-                  </footer>
-                </blockquote>
-              </li>
-            ))
-          }
-        </ul>
+        <h2 id="reviews-heading" class="sr-only">Patient reviews</h2>
+        <EmbedPlaceholder
+          label="An ELFsight reviews embed will be added here"
+          minHeight="30rem"
+        />
       </div>
     </section>
 
