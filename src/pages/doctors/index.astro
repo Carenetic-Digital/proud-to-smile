@@ -1,10 +1,10 @@
 ---
-// Doctors index — the two clinical providers plus the support team, matching
+// Doctors index — the clinical providers plus the support team, matching
 // the reference's doctors index (reference/screenshots/doctors-index.png).
 //
-// The real practice publishes profile pages for two providers only. Support
-// staff appear as first-name blurbs, exactly as the real /providers page has
-// them — no invented last names or bios.
+// Only providers the practice publishes profile pages for. Support staff
+// appear as first-name blurbs, exactly as the real /providers page has them —
+// no invented last names or bios.
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
@@ -18,7 +18,7 @@ import { CITY, STATE } from '../../data/site';
 
 <BaseLayout
   title={`Our Dentists & Team in ${CITY}, ${STATE} | Proud To Smile`}
-  description="Meet Patricia Swaintek-Lamb, DMD and Karima West, RDH, and the team behind Proud To Smile Dentistry in Bernardsville, NJ."
+  description="Meet Patricia Swaintek-Lamb, DMD, Madison Costello, DMD, and Karima West, RDH, and the team behind Proud To Smile Dentistry in Bernardsville, NJ."
 >
   <Header currentPath="/doctors/" />
 
@@ -27,7 +27,7 @@ import { CITY, STATE } from '../../data/site';
 
     <PageHero
       title="Meet Our Doctors"
-      intro="A close-knit team led by a dentist with over 25 years of experience — and a hygienist our patients ask for by name."
+      intro="A close-knit team led by a dentist with over 25 years of experience — joined by an associate dentist with hospital-based training and a hygienist our patients ask for by name."
       image="/images/proudtosmile/smiling-patient-with-provider.webp"
       imageAlt="A Proud To Smile Dentistry provider with a smiling patient"
     />
